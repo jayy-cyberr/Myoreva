@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
               className="space-y-6"
             >
               <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-                Wellness <span className="text-secondary">Redefined</span> for Nigerian Lifestyles
+                Wellness <span className="text-secondary">Redefined</span> for Modern Living 
               </h1>
               <p className="text-lg md:text-xl text-gray-200">
                 Premium health, beauty, and household products crafted with natural ingredients and African wellness traditions.

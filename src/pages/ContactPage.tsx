@@ -96,10 +96,10 @@ const ContactPage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold mb-2">Phone & WhatsApp</h3>
             <p className="text-gray-600 mb-2">
-              <a href="tel:+2348000000000" className="hover:text-secondary">+234 800 000 0000</a>
+              <a href="tel:+2348114580792" className="hover:text-secondary">+234 811 458 0792</a>
             </p>
             <p className="text-gray-600">
-              <a href="https://wa.me/2348000000000" className="hover:text-secondary">WhatsApp Support</a>
+              <a href="https://wa.me/2348114580792" className="hover:text-secondary">WhatsApp Support</a>
             </p>
           </div>
           

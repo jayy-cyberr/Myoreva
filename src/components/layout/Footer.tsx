@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <Logo variant="light" />
             <p className="text-gray-300 text-sm leading-relaxed">
-              MYOREVA is your trusted source for premium wellness, health, beauty, and household products in Nigeria.
+              MYOREVA is your trusted source for premium wellness, health, beauty, and household products.
             </p>
             <div className="flex space-x-4">
               <a href="https://facebook.com" className="text-white hover:text-secondary transition-colors" aria-label="Facebook">
@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 flex-shrink-0" size={18} />
-                <a href="tel:+2348000000000" className="text-gray-300 hover:text-secondary transition-colors">+234 800 000 0000</a>
+                <a href="tel:+2348114580792" className="text-gray-300 hover:text-secondary transition-colors">+234 8114580792</a>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 flex-shrink-0" size={18} />

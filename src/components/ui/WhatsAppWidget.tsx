@@ -8,7 +8,7 @@ const WhatsAppWidget: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const whatsappNumber = '+2348000000000';
+  const whatsappNumber = '+2348114580792';
   const whatsappMessage = encodeURIComponent('Hello, I have a question about MYOREVA products.');
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
