@@ -84,7 +84,7 @@ const ContactPage: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold mb-2">Our Location</h3>
             <p className="text-gray-600">
-              Bodija Market Area<br />
+              Akala way, Okebadan Estate<br />
               Ibadan, Oyo State<br />
               Nigeria
             </p>
@@ -259,7 +259,7 @@ const ContactPage: React.FC = () => {
                     <MapPin className="text-primary mx-auto mb-2" size={32} />
                     <p className="text-gray-600">
                       Google Maps would be embedded here.<br />
-                      Bodija Market Area, Ibadan, Oyo State
+                      Akala way, Okebadan Estate, Ibadan, Oyo State
                     </p>
                   </div>
                 </div>
