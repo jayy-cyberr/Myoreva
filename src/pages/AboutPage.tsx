@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Award, Users, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom'; // ✅ Add this line
+
 
 const AboutPage: React.FC = () => {
   return (

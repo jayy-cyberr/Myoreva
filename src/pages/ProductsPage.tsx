@@ -82,7 +82,7 @@ const ProductsPage: React.FC = () => {
 
   const handleClearFilters = () => {
     setSelectedCategory('');
-    setPriceRange([0, 5000]);
+    setPriceRange([0, 5000000]);
     setSortBy('featured');
     setSearchQuery('');
     setSearchParams({});
@@ -194,7 +194,7 @@ const ProductsPage: React.FC = () => {
               <input
                 type="range"
                 min="0"
-                max="5000"
+                max="5000000"
                 step="500"
                 value={priceRange[1]}
                 onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
@@ -259,7 +259,7 @@ const ProductsPage: React.FC = () => {
                 </div>
               </div>
               
-              {/* Price Range */}
+              Price Range
               <div className="mb-6">
                 <h4 className="font-medium mb-3">Price Range</h4>
                 <div className="mb-2 flex justify-between text-sm">
@@ -269,7 +269,7 @@ const ProductsPage: React.FC = () => {
                 <input
                   type="range"
                   min="0"
-                  max="5000"
+                  max="5000000"
                   step="500"
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}

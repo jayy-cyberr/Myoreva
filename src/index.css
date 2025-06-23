@@ -6,7 +6,7 @@
   --color-primary: #073829;
   --color-secondary: #15D07A;
   --color-accent: #A2A6FE;
-  --color-background: #F5F5F5;
+  --color-background: #F8FAFC;
   --color-text: #333333;
 }
 
@@ -35,11 +35,17 @@
   }
   
   .btn-primary {
-    @apply bg-secondary text-white hover:bg-secondary/90 focus:ring-2 focus:ring-secondary/50 focus:outline-none;
+    @apply text-white hover:opacity-90 focus:ring-2 focus:ring-secondary/50 focus:outline-none;
+    background: linear-gradient(to right, var(--color-secondary), #0ea55c);
   }
   
   .btn-outline {
-    @apply border border-secondary text-secondary hover:bg-secondary hover:text-white focus:ring-2 focus:ring-secondary/50 focus:outline-none;
+    @apply border border-secondary text-secondary focus:ring-2 focus:ring-secondary/50 focus:outline-none;
+  }
+
+  .btn-outline:hover {
+    @apply text-white;
+    background: linear-gradient(to right, var(--color-secondary), #0ea55c);
   }
   
   .input-field {
@@ -48,6 +54,19 @@
   
   .card {
     @apply bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .hero-section {
+    @apply relative bg-gradient-primary overflow-hidden;
+  }
+
+  .hero-section::before {
+    content: '';
+    @apply absolute inset-0 bg-hero-pattern opacity-90;
+  }
+
+  .footer-gradient {
+    @apply bg-gradient-dark text-white;
   }
 }
 

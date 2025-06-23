@@ -4,13 +4,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#073829',
-        secondary: '#15D07A',
-        accent: '#A2A6FE',
-        background: '#F5F5F5',
-        success: '#10B981',
-        warning: '#F59E0B',
-        error: '#EF4444',
+        primary: {
+          light: '#0A5D44',
+          DEFAULT: '#073829',
+          dark: '#052617'
+        },
+        secondary: {
+          light: '#1EE88F',
+          DEFAULT: '#15D07A',
+          dark: '#11B366'
+        },
+        accent: {
+          light: '#B8BBFE',
+          DEFAULT: '#A2A6FE',
+          dark: '#8C91FE'
+        },
+        background: {
+          light: '#FFFFFF',
+          DEFAULT: '#F8FAFC',
+          dark: '#F1F5F9'
+        }
+      },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(135deg, #073829 0%, #0A5D44 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #15D07A 0%, #1EE88F 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #A2A6FE 0%, #B8BBFE 100%)',
+        'gradient-dark': 'linear-gradient(135deg, #1E293B 0%, #334155 100%)',
+        'gradient-light': 'linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%)',
+        'hero-pattern': 'linear-gradient(135deg, rgba(7, 56, 41, 0.95) 0%, rgba(10, 93, 68, 0.95) 100%)',
+        'footer-pattern': 'linear-gradient(135deg, #052617 0%, #073829 100%)'
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
