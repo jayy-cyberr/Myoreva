@@ -2,7 +2,7 @@ import type React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Truck, Star, Leaf, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Truck, Star, Leaf, ChevronLeft, ChevronRight, Play, ZoomIn } from 'lucide-react';
 import Hbesty from '../assets/products/Hbesty.jpg';
 import Hbest from '../assets/products/Hbesty2.png';
 import campGas from'../assets/products/campgas.jpg';
@@ -168,10 +168,10 @@ const HomePage: React.FC = () => {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0,}}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0 }}
             className="absolute inset-0"
           >
             <div
@@ -191,24 +191,65 @@ const HomePage: React.FC = () => {
               <motion.div
                 key={`content-${currentSlide}`}
                 initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                animate={{ opacity: 1, x: 0, }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-white space-y-6"
               >
-                <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white">
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white "  >
+                  
                   {carouselSlides[currentSlide].title}
                 </h1>
+
+                {/* <motion.h1
+  initial={{ opacity: 0, y: -60 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, delay: 0.3 }}
+  className="text-4xl md:text-6xl font-bold leading-tight text-white"
+>
+  {carouselSlides[currentSlide].title}
+</motion.h1> */}
+
+
+{/* 
                 <p className="text-xl lg:text-xl text-gray-200 leading-relaxed max-w-lg">
                   {carouselSlides[currentSlide].subtitle}
-                </p>
+                </p> */}
+
+                <motion.p
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, delay: 0.6 }}
+  className="text-lg lg:text-xl text-gray-200 leading-relaxed max-w-xl"
+>
+  {carouselSlides[currentSlide].subtitle}
+</motion.p>
+
                 <div className="flex flex-wrap gap-4 pt-4">
                   <Link
-                    to={carouselSlides[currentSlide].buttonLink}
-                    className="inline-flex items-center px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
-                  >
-                    {carouselSlides[currentSlide].buttonText}
-                    <ArrowRight className="ml-2" size={20} />
-                  </Link>
+  to={carouselSlides[currentSlide].buttonLink}
+  className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition">
+  {/* Buttontext movement */}
+  <motion.span
+  key={`bounce-${currentSlide}`}
+  initial={{ scale: 1, y: 0 }}
+  animate={{
+    scale: [1, 1.05, 1],
+    y: [0, -4, 0]
+  }}
+  transition={{
+    duration: 2.1,
+    repeat: Infinity,
+    repeatType: 'loop',
+    ease: 'easeInOut'
+  }}
+  className="inline-block text-shadow-glow"
+>
+  {carouselSlides[currentSlide].buttonText}
+</motion.span>
+
+  <ArrowRight className="ml-2" size={18} />
+</Link>
+
                   <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-colors duration-300">
                     <Play className="mr-2" size={20} />
                     Watch Story
@@ -431,8 +472,8 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 lg:px-8">
+      <section className="py-20 bg-white overflow-x-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-xl p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <motion.div
@@ -445,7 +486,7 @@ const HomePage: React.FC = () => {
                 <p className="text-green-100 mb-6">
                   Subscribe to receive updates on new products, special offers, and wellness tips delivered straight to your inbox.
                 </p>
-                <form className="flex flex-col sm:flex-row gap-3">
+                <form className="flex flex-col sm:flex-row gap-3 w-full overflow-hidden">
                   <input
                     type="email"
                     placeholder="Your email address"

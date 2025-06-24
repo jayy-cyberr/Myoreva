@@ -63,7 +63,7 @@ const AboutPage: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold mb-4">Designed for Real Life</h3>
               <p className="text-gray-600">
-                Every MYOREVA product is created with care—made to support your everyday wellness in ways that feel natural, simple, and effective.
+                Every MYOREVA product is created with care-made to support your everyday wellness in ways that feel natural, simple, and effective.
 
 
               </p>
