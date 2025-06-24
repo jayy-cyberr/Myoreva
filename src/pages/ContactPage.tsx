@@ -79,19 +79,18 @@ const ContactPage: React.FC = () => {
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-            <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+            <div className="mb-4 bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
               <MapPin className="text-primary" size={28} />
             </div>
             <h3 className="text-xl font-bold mb-2">Our Location</h3>
             <p className="text-gray-600">
-              Akala way, Okebadan Estate<br />
-              Ibadan, Oyo State<br />
+              Ibadan, Oyo State <br />
               Nigeria
             </p>
           </div>
           
           <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-            <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+            <div className="mb-4 bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
               <Phone className="text-primary" size={28} />
             </div>
             <h3 className="text-xl font-bold mb-2">Phone & WhatsApp</h3>
@@ -104,7 +103,7 @@ const ContactPage: React.FC = () => {
           </div>
           
           <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-            <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+            <div className="mb-4 bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
               <Mail className="text-primary" size={28} />
             </div>
             <h3 className="text-xl font-bold mb-2">Email Us</h3>
@@ -235,7 +234,7 @@ const ContactPage: React.FC = () => {
                   <ul className="space-y-2">
                     <li className="flex justify-between">
                       <span className="text-gray-600">Monday - Friday:</span>
-                      <span className="font-medium">9:00 AM - 6:00 PM</span>
+                      <span className="font-medium">8:00 AM - 6:00 PM</span>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-gray-600">Saturday:</span>
@@ -258,8 +257,8 @@ const ContactPage: React.FC = () => {
                   <div className="text-center p-4">
                     <MapPin className="text-primary mx-auto mb-2" size={32} />
                     <p className="text-gray-600">
-                      Google Maps would be embedded here.<br />
-                      Akala way, Okebadan Estate, Ibadan, Oyo State
+                      Google Maps would be embedded here soon.<br />
+                      Ibadan, Oyo State
                     </p>
                   </div>
                 </div>
@@ -276,16 +275,15 @@ const ContactPage: React.FC = () => {
             <div>
               <h3 className="font-bold text-lg mb-2">What payment methods do you accept?</h3>
               <p className="text-gray-600">
-                We accept payments through Paystack, Flutterwave, bank transfers, and cash on delivery
-                for orders within Ibadan.
+                We accept payments through bank transfers, and cash on delivery
+                for orders within Nigeria.
               </p>
             </div>
             
             <div>
-              <h3 className="font-bold text-lg mb-2">How long does shipping take?</h3>
+              <h3 className="font-bold text-lg mb-2">How long does delivery take?</h3>
               <p className="text-gray-600">
-                Standard shipping within Nigeria takes 3-5 business days. Express shipping is available
-                for 1-2 day delivery. Local delivery in Ibadan is same-day or next-day.
+                Standard delivery across the states within Nigeria takes 24-48hours without delay.
               </p>
             </div>
             

@@ -18,8 +18,7 @@ const AboutPage: React.FC = () => {
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
               <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                MYOREVA was founded with a simple mission: to provide premium wellness products
-                that combine the best of Nigerian traditional remedies with modern science.
+                MYOREVA was founded with a simple mission: to provide premium wellness products that unite the finest natural remedies with modern science.
               </p>
               <div className="flex items-center">
                 <Leaf className="text-secondary mr-3" size={24} />
@@ -47,8 +46,7 @@ const AboutPage: React.FC = () => {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
             <p className="text-xl text-gray-600 leading-relaxed">
-              To improve the wellness of Nigerians by providing natural, effective, and affordable products
-              that promote health, beauty, and a balanced lifestyle.
+              "To enhance everyday wellness by offering natural, effective, high-quality, affordable and accessible products that support health, beauty, and a balanced lifestyle."
             </p>
           </div>
 
@@ -63,10 +61,11 @@ const AboutPage: React.FC = () => {
               <div className="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Leaf className="text-secondary" size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-4">Natural Ingredients</h3>
+              <h3 className="text-xl font-bold mb-4">Designed for Real Life</h3>
               <p className="text-gray-600">
-                We source the finest natural ingredients, many grown locally in Nigeria,
-                to create products that work in harmony with your body.
+                Every MYOREVA product is created with care—made to support your everyday wellness in ways that feel natural, simple, and effective.
+
+
               </p>
             </motion.div>
 
@@ -108,7 +107,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Our Journey */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      {/* <section className="py-16 md:py-24 bg-gray-50">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-16">
@@ -196,10 +195,10 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Our Team */}
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet Our Team</h2>
@@ -294,7 +293,7 @@ const AboutPage: React.FC = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values */}
       <section className="py-16 md:py-24 bg-primary text-white">

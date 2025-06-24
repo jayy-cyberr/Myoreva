@@ -21,7 +21,7 @@ interface CarouselSlide {
 const carouselSlides: CarouselSlide[] = [
   {
     id: 1,
-    title: "Wellness Redefined",
+    title: "MyOreva Wellness",
     subtitle: "Where every product tells a story of natural healing and every choice leaves a healthier you",
     background: "https://images.pexels.com/photos/5938233/pexels-photo-5938233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Discover Products",
@@ -31,13 +31,13 @@ const carouselSlides: CarouselSlide[] = [
     id: 2,
     title: "Natural. Pure. Effective.",
     subtitle: "Premium health and beauty products crafted with African wellness traditions and modern science",
-    background: "https://images.pexels.com/photos/4077164/pexels-photo-4077164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Shop Now",
     buttonLink: "/products"
   },
   {
     id: 3,
-    title: "Wart-Remover",
+    title: "Wart Remover",
     subtitle: "Experience the power of nature with our curated selection of wellness essentials",
     background: "https://images.pexels.com/photos/3865560/pexels-photo-3865560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Learn More",
@@ -47,7 +47,7 @@ const carouselSlides: CarouselSlide[] = [
     id: 4,
     title: "Transform Your Lifestyle",
     subtitle: "Join thousands who have discovered the MYOREVA difference in natural wellness",
-    background: "https://images.pexels.com/photos/5503415/pexels-photo-5503415.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    background: "https://cdn.pixabay.com/photo/2022/06/01/08/57/watermelon-7235140_1280.jpg",
     buttonText: "Get Started",
     buttonLink: "/products"
   },
@@ -55,7 +55,7 @@ const carouselSlides: CarouselSlide[] = [
     id: 5,
     title: "Nature's Best, Delivered",
     subtitle: "Sustainable, eco-friendly products that care for you and the planet",
-    background: "https://images.pexels.com/photos/6621310/pexels-photo-6621310.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Explore Range",
     buttonLink: "/products"
   }
@@ -65,7 +65,7 @@ const featuredProducts = [
   {
     id: 1,
     name: "Wart-Remover",
-    description: "Premium vitamin C serum with natural African botanicals for radiant, even-toned skin.",
+    description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbesty,
     reviews: [1, 2, 3, 4, 5],
@@ -74,7 +74,7 @@ const featuredProducts = [
   {
     id: 2,
     name: "Camping Gas Stove",
-    description: "Powerful blend of traditional herbs and modern nutrients to strengthen your immune system.",
+    description: "Portable Windproof Camping Stove - Stainless Steel, Foldable Design with Adjustable Legs for Outdoor Adventures, Hiking, and Picnics, Camping Accessorie.",
     price: 38500,
     image: campGas,
     reviews: [1, 2, 3, 4, 5],
@@ -83,7 +83,7 @@ const featuredProducts = [
   {
     id: 3,
     name: "Wart-Removal",
-    description: "Nourishing blend of natural oils to promote healthy hair growth and scalp health.",
+    description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbest,
     reviews: [1, 2, 3, 4, 5],
@@ -92,7 +92,7 @@ const featuredProducts = [
   {
     id: 4,
     name: "Camping Gas Stove",
-    description: "Plant-based household cleaner that's gentle on skin and tough on stains.",
+    description: "Portable Windproof Camping Stove - Stainless Steel, Foldable Design with Adjustable Legs for Outdoor Adventures, Hiking, and Picnics, Camping Accessorie.",
     price: 38500,
     image: campGa,
     reviews: [1, 2, 3, 4],
@@ -103,25 +103,25 @@ const featuredProducts = [
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
+    name: "Anonymous",
     location: "Lagos, Nigeria",
-    comment: "The natural skincare products transformed my skin completely. I've never felt more confident!",
+    comment: "Bro! Thank you so much, the product really works. My warts has cleared pata pata. I mean it's all gone!",
     rating: 5,
-    image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=100"
+    image: "https://media.istockphoto.com/id/1289729022/photo/silhouette-af-man-without-face-in-hood-on-red-background-anonymous-crime-concept.jpg?s=1024x1024&w=is&k=20&c=EbCW6zkQ_3dvMUSh5NsKQQ-SBRyp14A7WCGWBU_cm_0="
   },
   {
     id: 2,
-    name: "David Okafor",
+    name: "Sarah Johnson",
     location: "Abuja, Nigeria",
     comment: "Amazing quality and fast delivery. These products are now part of my daily wellness routine.",
     rating: 5,
-    image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100"
+    image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=100%22"
   },
   {
     id: 3,
     name: "Fatima Hassan",
     location: "Kano, Nigeria",
-    comment: "Love the eco-friendly approach. Finally found products that align with my values!",
+    comment: "Now I believe you truly sells the original. And I must say I Love the eco-friendly approach. Finally found products that align with my values!",
     rating: 5,
     image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
   }
@@ -130,6 +130,7 @@ const testimonials = [
 const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  
 
   // Auto-play functionality
   useEffect(() => {
@@ -308,7 +309,7 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="text-4xl font-bold text-gray-900 mb-4"
             >
-              Featured Products
+              Popular Demands
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -317,7 +318,7 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="text-xl text-gray-600 max-w-2xl mx-auto"
             >
-              Discover our carefully selected premium wellness offerings
+              Our most popular products loved by customers across Nigeria
             </motion.p>
           </div>
 
@@ -338,7 +339,7 @@ const HomePage: React.FC = () => {
                     className="w-full h-64 object-cover"
                   />
                   <div className="absolute top-4 left-4 bg-green-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
-                    Featured
+                    Now Selling
                   </div>
                 </div>
                 <div className="p-6">

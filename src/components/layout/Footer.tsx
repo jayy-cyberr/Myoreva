@@ -15,13 +15,13 @@ const Footer: React.FC = () => {
               MYOREVA is your trusted source for premium wellness, health, beauty, and household products.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" className="text-white hover:text-secondary transition-colors" aria-label="Facebook">
+              <a href="https://web.facebook.com/profile.php?id=61577633495353" className="text-white hover:text-secondary transition-colors" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="https://twitter.com" className="text-white hover:text-secondary transition-colors" aria-label="Twitter">
+              <a href="https://x.com/Myorevaofficial?t=R-Zin_6hQWfSR-S9226ZWw&s=09" className="text-white hover:text-secondary transition-colors" aria-label="Twitter">
                 <Twitter size={20} />
               </a>
-              <a href="https://instagram.com" className="text-white hover:text-secondary transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/myoreva_official?igsh=YzlmNDdycXh4eW5t" className="text-white hover:text-secondary transition-colors" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
             </div>
@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white hover:underline">Quick Links</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/" className="text-gray-300 hover:text-secondary transition-colors">Home</Link>
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
 
           {/* Categories */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Categories</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white hover:underline">Categories</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/products?category=health" className="text-gray-300 hover:text-secondary transition-colors">Health Products</Link>
@@ -67,20 +67,22 @@ const Footer: React.FC = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-white">Contact Us</h3>
+            <h3 className="text-lg font-semibold mb-4 text-white hover:underline">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex items-start">
+              {/* <li className="flex items-start">
                 <MapPin className="mr-2 mt-1 flex-shrink-0" size={18} />
                 <span className="text-gray-300">Ibadan, Oyo-State, Nigeria</span>
+              </li> */}
+
+              <li className="flex items-center">
+                <Mail className="mr-2 flex-shrink-0" size={18} />
+                <a href="mailto:info@myoreva.com" className="text-gray-300 hover:text-secondary transition-colors">info@myoreva.com</a>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 flex-shrink-0" size={18} />
                 <a href="tel:+2348114580792" className="text-gray-300 hover:text-secondary transition-colors">+234 8114580792</a>
               </li>
-              <li className="flex items-center">
-                <Mail className="mr-2 flex-shrink-0" size={18} />
-                <a href="mailto:info@myoreva.com" className="text-gray-300 hover:text-secondary transition-colors">info@myoreva.com</a>
-              </li>
+              
             </ul>
           </div>
         </div>
