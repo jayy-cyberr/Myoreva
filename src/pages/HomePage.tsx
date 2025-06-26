@@ -21,7 +21,7 @@ interface CarouselSlide {
 const carouselSlides: CarouselSlide[] = [
   {
     id: 1,
-    title: "Premium",
+    title: "Welcome to",
     subtitle: "MYOREVA WELLNESS",
     background: "https://images.pexels.com/photos/5938233/pexels-photo-5938233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Discover Products",
