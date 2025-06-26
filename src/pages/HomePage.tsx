@@ -1,13 +1,13 @@
 import type React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Truck, Star, Leaf, ChevronLeft, ChevronRight, Play, ZoomIn } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { ArrowRight, ShieldCheck, Truck, Star, Leaf, ChevronLeft, ChevronRight, Play, ZoomIn, Heart, Package, Award, Shield, Users } from 'lucide-react';
+import MagneticButton from '../components/MagneticButton';
 import Hbesty from '../assets/products/Hbesty.jpg';
 import Hbest from '../assets/products/Hbesty2.png';
 import campGas from'../assets/products/campgas.jpg';
 import campGa from'../assets/products/campgas2.jpg';
-
 
 interface CarouselSlide {
   id: number;
@@ -21,42 +21,42 @@ interface CarouselSlide {
 const carouselSlides: CarouselSlide[] = [
   {
     id: 1,
-    title: "MyOreva Wellness",
-    subtitle: "Where every product tells a story of natural healing and every choice leaves a healthier you",
+    title: "Premium",
+    subtitle: "MYOREVA WELLNESS",
     background: "https://images.pexels.com/photos/5938233/pexels-photo-5938233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Discover Products",
     buttonLink: "/products"
   },
   {
     id: 2,
-    title: "Natural. Pure. Effective.",
-    subtitle: "Premium health and beauty products crafted with African wellness traditions and modern science",
+    title: "Natural",
+    subtitle: "HIGHLY EFFECTIVE",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Shop Now",
     buttonLink: "/products"
   },
   {
     id: 3,
-    title: "Wart Remover",
-    subtitle: "Experience the power of nature with our curated selection of wellness essentials",
+    title: "Premium",
+    subtitle: "WART REMOVER",
     background: "https://images.pexels.com/photos/3865560/pexels-photo-3865560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "Learn More",
-    buttonLink: "/about"
+    buttonLink: "/products"
   },
   {
     id: 4,
     title: "Transform Your Lifestyle",
-    subtitle: "Join thousands who have discovered the MYOREVA difference in natural wellness",
+    subtitle: "WELLNESS JOURNEY",
     background: "https://cdn.pixabay.com/photo/2022/06/01/08/57/watermelon-7235140_1280.jpg",
     buttonText: "Get Started",
     buttonLink: "/products"
   },
   {
     id: 5,
-    title: "Nature's Best, Delivered",
-    subtitle: "Sustainable, eco-friendly products that care for you and the planet",
+    title: "Nature's Best",
+    subtitle: "DELIVERED TO YOU",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    buttonText: "Explore Range",
+    buttonText: "Buy Now",
     buttonLink: "/products"
   }
 ];
@@ -65,37 +65,45 @@ const featuredProducts = [
   {
     id: 1,
     name: "Wart-Remover",
+    category: "Now Selling",
     description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbesty,
-    reviews: [1, 2, 3, 4, 5],
+    rating: 5,
+    reviews: 5,
     redirectUrl: "https://sabimarket.com.ng/wart-remover/"
   },
   {
     id: 2,
     name: "Camping Gas Stove",
-    description: "Portable Windproof Camping Stove - Stainless Steel, Foldable Design with Adjustable Legs for Outdoor Adventures, Hiking, and Picnics, Camping Accessorie.",
+    category: "TRENDING",
+    description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
     price: 38500,
     image: campGas,
-    reviews: [1, 2, 3, 4, 5],
+    rating: 4,
+    reviews: 8,
     redirectUrl: "https://sabimarket.com.ng/camp-gas/"
   },
   {
     id: 3,
-    name: "Wart-Removal",
+    name: "Wart-Remover",
+    category: "Now Selling",
     description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbest,
-    reviews: [1, 2, 3, 4, 5],
+    rating: 5,
+    reviews: 12,
     redirectUrl: "https://sabimarket.com.ng/wart-remover/"
   },
   {
     id: 4,
     name: "Camping Gas Stove",
-    description: "Portable Windproof Camping Stove - Stainless Steel, Foldable Design with Adjustable Legs for Outdoor Adventures, Hiking, and Picnics, Camping Accessorie.",
+    category: "TRENDING",
+    description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
     price: 38500,
     image: campGa,
-    reviews: [1, 2, 3, 4],
+    rating: 4,
+    reviews: 6,
     redirectUrl: "https://sabimarket.com.ng/camp-gas/"
   }
 ];
@@ -130,7 +138,7 @@ const testimonials = [
 const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
-  
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   // Auto-play functionality
   useEffect(() => {
@@ -143,10 +151,19 @@ const HomePage: React.FC = () => {
     return () => clearInterval(interval);
   }, [isAutoPlay]);
 
+  // Auto-play for testimonials
+  useEffect(() => {
+    const testimonialInterval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+
+    return () => clearInterval(testimonialInterval);
+  }, []);
+
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
     setIsAutoPlay(false);
-    setTimeout(() => setIsAutoPlay(true), 10000); // Resume auto-play after 10s
+    setTimeout(() => setIsAutoPlay(true), 10000);
   };
 
   const nextSlide = () => {
@@ -163,15 +180,15 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="bg-gray-50">
-      {/* Hero Carousel Section */}
+      {/* Hero Section - Enhanced */}
       <section className="relative h-screen overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0,}}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
             className="absolute inset-0"
           >
             <div
@@ -184,296 +201,406 @@ const HomePage: React.FC = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Content Overlay */}
-        <div className="relative z-10 h-full flex items-center">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                key={`content-${currentSlide}`}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0, }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-white space-y-6"
-              >
-                <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white "  >
-                  
-                  {carouselSlides[currentSlide].title}
-                </h1>
+        <div className="relative z-10 min-h-screen">
+          {/* Hero Content */}
+          <div className="container mx-auto px-4 lg:px-8 pt-20 pb-16">
+            <div className="grid lg:grid-cols-3 gap-8 min-h-[80vh]">
+              {/* Left Content */}
+              <div className="lg:col-span-2 flex items-center">
+                <motion.div
+                  key={`content-${currentSlide}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-white space-y-6"
+                >
+                  <div className="space-y-2">
+                    <motion.h3
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                      className="text-2xl md:text-3xl font-light text-green-200"
+                    >
+                      {carouselSlides[currentSlide].title}
+                    </motion.h3>
 
-                {/* <motion.h1
-  initial={{ opacity: 0, y: -60 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1, delay: 0.3 }}
-  className="text-4xl md:text-6xl font-bold leading-tight text-white"
->
-  {carouselSlides[currentSlide].title}
-</motion.h1> */}
+                    <motion.h1
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                      className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
+                    >
+                      {carouselSlides[currentSlide].subtitle}
+                    </motion.h1>
+                  </div>
 
+                  <motion.p
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                    className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl"
+                  >
+                    A Friend To Your Wellness
+                  </motion.p>
 
-{/* 
-                <p className="text-xl lg:text-xl text-gray-200 leading-relaxed max-w-lg">
-                  {carouselSlides[currentSlide].subtitle}
-                </p> */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="pt-6"
+                  >
+                    <Link
+                      to={carouselSlides[currentSlide].buttonLink}
+                      className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition"
+                    >
+                      <motion.span
+                        key={`bounce-${currentSlide}`}
+                        initial={{ scale: 1, y: 0 }}
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          y: [0, -4, 0]
+                        }}
+                        transition={{
+                          duration: 2.1,
+                          repeat: Infinity,
+                          repeatType: 'loop',
+                          ease: 'easeInOut'
+                        }}
+                        className="inline-block"
+                      >
+                        {carouselSlides[currentSlide].buttonText}
+                      </motion.span>
+                      <ArrowRight className="ml-2" size={18} />
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </div>
 
-                <motion.p
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1, delay: 0.6 }}
-  className="text-lg lg:text-xl text-gray-200 leading-relaxed max-w-xl"
->
-  {carouselSlides[currentSlide].subtitle}
-</motion.p>
+              {/* Right Side Trust Indicators */}
+              <div className="lg:col-span-1 flex items-center">
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="w-full space-y-4"
+                >
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="flex items-center space-x-3">
+                      <Shield className="text-green-300" size={24} />
+                      <div>
+                        <h4 className="text-white font-semibold">Secure</h4>
+                        <p className="text-green-200 text-sm">Payment on Delivery</p>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <Link
-  to={carouselSlides[currentSlide].buttonLink}
-  className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition">
-  {/* Buttontext movement */}
-  <motion.span
-  key={`bounce-${currentSlide}`}
-  initial={{ scale: 1, y: 0 }}
-  animate={{
-    scale: [1, 1.05, 1],
-    y: [0, -4, 0]
-  }}
-  transition={{
-    duration: 2.1,
-    repeat: Infinity,
-    repeatType: 'loop',
-    ease: 'easeInOut'
-  }}
-  className="inline-block text-shadow-glow"
->
-  {carouselSlides[currentSlide].buttonText}
-</motion.span>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="flex items-center space-x-3">
+                      <Truck className="text-green-300" size={24} />
+                      <div>
+                        <h4 className="text-white font-semibold">Delivery</h4>
+                        <p className="text-green-200 text-sm">Local & INTL.</p>
+                      </div>
+                    </div>
+                  </div>
 
-  <ArrowRight className="ml-2" size={18} />
-</Link>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="flex items-center space-x-3">
+                      <Users className="text-green-300" size={24} />
+                      <div>
+                        <h4 className="text-white font-semibold">Satisfaction</h4>
+                        <p className="text-green-200 text-sm">1000+ Happy Customers</p>
+                      </div>
+                    </div>
+                  </div>
 
-                  <button className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition-colors duration-300">
-                    <Play className="mr-2" size={20} />
-                    Watch Story
-                  </button>
-                </div>
-              </motion.div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="flex items-center space-x-3">
+                      <Award className="text-green-300" size={24} />
+                      <div>
+                        <h4 className="text-white font-semibold">100%</h4>
+                        <p className="text-green-200 text-sm">Guaranteed!</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Navigation Controls */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-          <div className="flex space-x-3">
-            {carouselSlides.map((slide, index) => (
-              <button
-                key={`dot-${slide.id}`}
-                onClick={() => goToSlide(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                  currentSlide === index
-                    ? 'bg-white scale-125'
-                    : 'bg-white/50 hover:bg-white/80'
-                }`}
-              />
-            ))}
+          {/* Navigation Dots */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="flex space-x-3">
+              {carouselSlides.map((slide, index) => (
+                <button
+                  key={`dot-${slide.id}`}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? 'bg-white scale-125'
+                      : 'bg-white/50 hover:bg-white/80'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Arrow Navigation */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 p-3 bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors duration-300"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20 p-3 bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors duration-300"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </section>
-
-      {/* Trust Features */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex items-center p-6 bg-gray-50 rounded-xl"
-            >
-              <ShieldCheck className="text-green-600 mr-4 flex-shrink-0" size={40} />
-              <div>
-                <h3 className="font-semibold text-gray-800 text-lg">100% Natural</h3>
-                <p className="text-gray-600">All products made with premium natural ingredients</p>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="flex items-center p-6 bg-gray-50 rounded-xl"
-            >
-              <Truck className="text-green-600 mr-4 flex-shrink-0" size={40} />
-              <div>
-                <h3 className="font-semibold text-gray-800 text-lg">Fast Delivery</h3>
-                <p className="text-gray-600">Free Delivery + Nationwide Coverage</p>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="flex items-center p-6 bg-gray-50 rounded-xl"
-            >
-              <Leaf className="text-green-600 mr-4 flex-shrink-0" size={40} />
-              <div>
-                <h3 className="font-semibold text-gray-800 text-lg">Eco-Friendly</h3>
-                <p className="text-gray-600">Sustainable practices and recyclable packaging</p>
-              </div>
-            </motion.div>
-          </div>
+          {/* Arrow Navigation */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors duration-300"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/30 text-white rounded-full transition-colors duration-300"
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
+      {/* Products Section - and Background Styling*/}
+      <section className="py-16 bg-white  relative overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-8">
+<div className="absolute top-0 left-0 w-72 h-72 bg-green-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+
+        <div className="container mx-auto px-4 lg:px-8 relative z-10"></div>
+
+
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="inline-block"
+            >
+              <span className="text-green-600 text-sm font-medium bg-green-50 px-4 py-2 rounded-full border border-green-200 shadow-sm">
+                Best selling
+              </span>
+            </motion.div>
+
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-4xl font-bold text-gray-900 mb-4"
+              className="text-4xl md:text-5xl font-bold text-gray-900 mt-6 bg-gradient-to-r from-gray-900 via-green-800 to-gray-900 bg-clip-text text-transparent"
             >
-              Popular Demands
+              Popular Demand
             </motion.h2>
+
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-600 max-w-2xl mx-auto"
+              className="text-gray-600 mt-4 max-w-2xl mx-auto text-lg"
             >
-              Our most popular products loved by customers across Nigeria
+              Discover our most loved products that customers can't stop talking about
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Products Grid - 2 columns on mobile */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {featuredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40, }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
               >
-                <div className="relative">
+                <div className="relative group">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-4 left-4 bg-green-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
-                    Now Selling
+                  {/* <button className="absolute top-3 right-3 p-2 bg-white/80 hover:bg-white rounded-full transition-colors">
+                    <Heart size={16} className="text-gray-600 hover:text-red-500" />
+                  </button> */}
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+                      {product.category}
+                    </span>
+
+                    
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-semibold text-xl mb-2 text-gray-900">{product.name}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-                  <div className="flex justify-between items-center mb-4">
-                    <div className="flex items-center">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={`product-${product.id}-star-${i}`} size={16} fill="#F59E0B" stroke="#F59E0B" />
-                        ))}
-                      </div>
-                      <span className="ml-2 text-sm text-gray-600">
-                        {product.reviews.length} Reviews
-                      </span>
+
+                <div className="p-3 md:p-4">
+                  <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
+                    {product.name}
+                  </h3>
+
+                  <div className="flex items-center mb-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          size={12}
+                          className={i < product.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
+                        />
+                      ))}
                     </div>
-                    <span className="font-semibold text-lg text-gray-900">₦{product.price.toLocaleString()}</span>
+                    <span className="ml-1 text-xs text-gray-600">
+                      {product.reviews}
+                    </span>
                   </div>
-              <a
-  href={product.redirectUrl}
-  // target="_blank"
-  rel="noopener noreferrer"
-  className="block text-center w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-colors duration-300"
->
-  Order Now
-</a>
+
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold text-lg text-gray-900">
+                      ₦{product.price.toLocaleString()}
+                    </span>
+                  </div>
+
+                  <a
+                    href={product.redirectUrl}
+                    rel="noopener noreferrer"
+                    className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm"
+                  >
+                    Order Now
+                  </a>
                 </div>
               </motion.div>
+              
             ))}
           </div>
+
+{/* View All Products Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <MagneticButton
+              href="/products"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform"
+            >
+              <span>View All Products</span>
+              <ArrowRight className="ml-2" size={20} />
+            </MagneticButton>
+          </motion.div>
+
+
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-gray-900 text-white">
+      
+
+      {/* Testimonials - */}
+      <section className="py-20 bg-gradient-to-br from-gray-100 via-white to-gray-100 relative overflow-hidden">
+
+        
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2
+          <div className="text-center mb-12">
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="text-4xl font-bold text-white mb-4"
+              className="text-sm md:text-base font-semibold text-gray-600 tracking-wider uppercase mb-4 flex items-center justify-center space-x-2"
             >
-              What Our Customers Say
-            </motion.h2>
-            <motion.p
+
+              WHAT PEOPLE ARE SAYING
+            </motion.p>
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-300 max-w-2xl mx-auto"
+              className="text-3xl md:text-4xl font-bold text-gray-900 "
             >
-              Don't just take our word for it - hear from our satisfied customers across Nigeria
-            </motion.p>
+              The Experience
+            </motion.h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+          {/* Single Sliding Testimonial */}
+          <div className="max-w-4xl mx-auto">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+                key={currentTestimonial}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.6 }}
+                className="text-center"
               >
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={`testimonial-${testimonial.id}-star-${i}`} size={16} fill="#F59E0B" stroke="#F59E0B" />
-                  ))}
-                </div>
-                <p className="text-gray-200 italic mb-6">"{testimonial.comment}"</p>
-                <div className="flex items-center">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-white">{testimonial.name}</h4>
-                    <p className="text-gray-300 text-sm">{testimonial.location}</p>
+                <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-8">
+                  <div className="flex justify-center mb-6">
+                    {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                      <Star key={`testimonial-star-${i}`} size={20} fill="#F59E0B" stroke="#F59E0B" />
+                    ))}
+                  </div>
+
+                  <blockquote className="text-lg md:text-xl text-gray-700 italic leading-relaxed mb-8">
+                    "{testimonials[currentTestimonial].comment}"
+                  </blockquote>
+
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={testimonials[currentTestimonial].image}
+                      alt={testimonials[currentTestimonial].name}
+                      className="w-16 h-16 rounded-full object-cover mr-4 border-4 border-green-100"
+                    />
+                    <div className="text-left">
+                      <h4 className="font-bold text-gray-900 text-lg">
+                        {testimonials[currentTestimonial].name}
+                      </h4>
+                      <p className="text-gray-600">{testimonials[currentTestimonial].location}</p>
+                    </div>
                   </div>
                 </div>
               </motion.div>
-            ))}
+            </AnimatePresence>
+
+
+            {/* Navigation Dots */}
+            <div className="flex justify-center items-center space-x-8 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={`testimonial-nav-${index}`}
+                  onClick={() => setCurrentTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentTestimonial === index
+                      ? 'bg-green-600 scale-125'
+                      : 'bg-gray-300 hover:bg-green-600'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex justify-center mt-6 space-x-4">
+              <button
+                onClick={() => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                className="p-2 bg-green-600 hover:bg-green-700 text-white rounded-full transition-colors duration-300"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
+                className="p-2 bg-green-600 hover:bg-green-700 text-white rounded-full transition-colors duration-300"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-white overflow-x-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 lg:px-8">
           <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-xl p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <motion.div
@@ -484,9 +611,9 @@ const HomePage: React.FC = () => {
               >
                 <h2 className="text-3xl font-bold mb-4 text-white">Join Our Wellness Community</h2>
                 <p className="text-green-100 mb-6">
-                  Subscribe to receive updates on new products, special offers, and wellness tips delivered straight to your inbox.
+                  Subscribe to receive updates on new products, special offers, and wellness tips.
                 </p>
-                <form className="flex flex-col sm:flex-row gap-3 w-full overflow-hidden">
+                <form className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="email"
                     placeholder="Your email address"
@@ -495,7 +622,7 @@ const HomePage: React.FC = () => {
                   />
                   <button
                     type="submit"
-                    className="px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300 whitespace-nowrap"
+                    className="px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300"
                   >
                     Subscribe Now
                   </button>

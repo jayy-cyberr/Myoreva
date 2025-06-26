@@ -18,7 +18,7 @@ const AboutPage: React.FC = () => {
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
               <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                MYOREVA was founded with a simple mission: to provide premium wellness products that unite the finest natural remedies with modern science.
+                MYOREVA was founded with a simple mission: to provide premium wellness products that unite the finest remedies with modern science.
               </p>
               <div className="flex items-center">
                 <Leaf className="text-secondary mr-3" size={24} />
