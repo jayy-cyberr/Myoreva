@@ -42,13 +42,13 @@ export const products: Product[] = [
     howToUse: "Add one teaspoon to hot water. Steep for 3-5 minutes. Enjoy up to 3 cups daily.",
     reviews: [
       {
-        rating: 5,
+        rating: 9,
         user: "Oluwaseun A.",
         comment: "This tea is amazing! I drink it every evening and it helps me relax after a long day.",
         date: "2025-01-15"
       },
       {
-        rating: 4,
+        rating: 7,
         user: "Chidi E.",
         comment: "Great taste and quality. Will buy again.",
         date: "2025-01-02"
@@ -71,7 +71,7 @@ export const products: Product[] = [
     howToUse: "Apply a small amount to clean skin. Massage gently until absorbed. Use daily for best results.",
     reviews: [
       {
-        rating: 5,
+        rating: 10,
         user: "Amina J.",
         comment: "My skin has never felt better! This moisturizer is perfect for the dry season.",
         date: "2025-02-10"

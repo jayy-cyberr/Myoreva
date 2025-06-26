@@ -24,7 +24,7 @@ const carouselSlides: CarouselSlide[] = [
     title: "Welcome to",
     subtitle: "MYOREVA WELLNESS",
     background: "https://images.pexels.com/photos/5938233/pexels-photo-5938233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    buttonText: "Discover Products",
+    buttonText: "SHOP HERE",
     buttonLink: "/products"
   },
   {
@@ -32,7 +32,7 @@ const carouselSlides: CarouselSlide[] = [
     title: "Natural",
     subtitle: "HIGHLY EFFECTIVE",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    buttonText: "Shop Now",
+    buttonText: "ORDER NOW",
     buttonLink: "/products"
   },
   {
@@ -40,7 +40,7 @@ const carouselSlides: CarouselSlide[] = [
     title: "Premium",
     subtitle: "WART REMOVER",
     background: "https://images.pexels.com/photos/3865560/pexels-photo-3865560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    buttonText: "Learn More",
+    buttonText: "BUY NOW",
     buttonLink: "/products"
   },
   {
@@ -48,7 +48,7 @@ const carouselSlides: CarouselSlide[] = [
     title: "Transform Your Lifestyle",
     subtitle: "WELLNESS JOURNEY",
     background: "https://cdn.pixabay.com/photo/2022/06/01/08/57/watermelon-7235140_1280.jpg",
-    buttonText: "Get Started",
+    buttonText: "ORDER NOW",
     buttonLink: "/products"
   },
   {
@@ -56,7 +56,7 @@ const carouselSlides: CarouselSlide[] = [
     title: "Nature's Best",
     subtitle: "DELIVERED TO YOU",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    buttonText: "Buy Now",
+    buttonText: "SHOP HERE",
     buttonLink: "/products"
   }
 ];
@@ -182,24 +182,24 @@ const HomePage: React.FC = () => {
     <div className="bg-gray-50">
       {/* Hero Section - Enhanced */}
       <section className="relative h-screen overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url(${carouselSlides[currentSlide].background})`
-              }}
-            />
-            <div className="absolute inset-0 bg-black/50" />
-          </motion.div>
-        </AnimatePresence>
+        {/* <AnimatePresence mode="wait"> */}
+{/* This prevents re-renders, avoids white flashes, and smoothly fades between backgrounds without blinking. */}
+
+          <div className="absolute inset-0">
+  {carouselSlides.map((slide, index) => (
+    <motion.div
+      key={index}
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+      style={{ backgroundImage: `url(${slide.background})` }}
+      animate={{ opacity: index === currentSlide ? 1 : 0 }}
+      initial={false}
+      transition={{ duration: 1, ease: 'easeInOut' }}
+    />
+  ))}
+  <div className="absolute inset-0 bg-black/40" />
+</div>
+
+        {/* </AnimatePresence> */}
 
         <div className="relative z-10 min-h-screen">
           {/* Hero Content */}
@@ -403,7 +403,7 @@ const HomePage: React.FC = () => {
               viewport={{ once: true }}
               className="text-gray-600 mt-4 max-w-2xl mx-auto text-lg"
             >
-              Discover our most loved products that customers can't stop talking about
+              Check out our most loved products that customers can't stop talking about
             </motion.p>
           </div>
 

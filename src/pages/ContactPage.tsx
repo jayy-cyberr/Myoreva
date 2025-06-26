@@ -19,11 +19,8 @@ const ContactPage: React.FC = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {[{
-            icon: <MapPin className="text-primary" size={28} />,
-            title: 'Our Location',
-            details: 'Ibadan, Oyo State\nNigeria'
-          }, {
+          {[
+            {
             icon: <Phone className="text-primary" size={28} />,
             title: 'Phone & WhatsApp',
             details: (
@@ -37,11 +34,19 @@ const ContactPage: React.FC = () => {
             title: 'Email Us',
             details: (
               <>
-                <a href="mailto:info@myoreva.com" className="hover:text-secondary block">info@myoreva.com</a>
+                {/* <a href="mailto:info@myoreva.com" className="hover:text-secondary block">info@myoreva.com</a> */}
                 <a href="mailto:support@myoreva.com" className="hover:text-secondary block">support@myoreva.com</a>
               </>
             )
-          }].map((item, index) => (
+          },
+
+          {
+            icon: <MapPin className="text-primary" size={28} />,
+            title: 'Our Location',
+            details: 'Ibadan, Oyo State\nNigeria'
+          }, 
+        
+        ].map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -93,13 +98,15 @@ const ContactPage: React.FC = () => {
                   <ul className="space-y-2">
                     <li className="flex justify-between"><span className="text-gray-600">Mon - Fri:</span><span className="font-medium">8:00 AM - 6:00 PM</span></li>
                     <li className="flex justify-between"><span className="text-gray-600">Saturday:</span><span className="font-medium">10:00 AM - 4:00 PM</span></li>
-                    <li className="flex justify-between"><span className="text-gray-600">Sunday:</span><span className="font-medium">Closed</span></li>
+                    
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm p-8">
+            {/* GOOGLE MAP */}
+
+            {/* <div className="bg-white rounded-xl shadow-sm p-8">
               <h3 className="text-xl font-bold mb-4">Find Us</h3>
               <div className="rounded-lg overflow-hidden h-80 bg-gray-200 flex items-center justify-center">
                 <div className="text-center p-4">
@@ -107,7 +114,8 @@ const ContactPage: React.FC = () => {
                   <p className="text-gray-600">Google Maps Embed Coming Soon<br />Ibadan, Oyo State</p>
                 </div>
               </div>
-            </div>
+            </div> */}
+
           </motion.div>
         </div>
 

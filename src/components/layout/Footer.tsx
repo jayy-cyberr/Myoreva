@@ -59,9 +59,9 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/products?category=household" className="text-gray-300 hover:text-secondary transition-colors">Household Items</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/products?category=wellness" className="text-gray-300 hover:text-secondary transition-colors">Wellness</Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
 
               <li className="flex items-center">
                 <Mail className="mr-2 flex-shrink-0" size={18} />
-                <a href="mailto:info@myoreva.com" className="text-gray-300 hover:text-secondary transition-colors">info@myoreva.com</a>
+                <a href="mailto:info@myoreva.com" className="text-gray-300 hover:text-secondary transition-colors">support@myoreva.com</a>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 flex-shrink-0" size={18} />
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="border-t border-gray-700 mt-12 pt-8">
+        {/* <div className="border-t border-gray-700 mt-12 pt-8">
           <div className="max-w-xl mx-auto text-center">
             <h3 className="text-lg font-semibold mb-2 text-white">Subscribe to Our Newsletter</h3>
             <p className="text-gray-300 mb-4">Stay updated with our latest products and offers</p>
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
               </button>
             </form>
           </div>
-        </div>
+        </div> */}
 
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-12 pt-6 text-center text-gray-400 text-sm">
