@@ -5,6 +5,13 @@ import { Link } from "react-router-dom";
 
 const missionItems = [
 {
+    icon: <Heart className="text-secondary" size={32} />,
+    title: "Customer First",
+    description:
+      "We're committed to exceptional customer service and creating and sourcing products that address the real needs of our community.",
+  },
+
+{
     icon: <Award className="text-secondary" size={32} />,
     title: "Quality Assured",
     description:
@@ -15,15 +22,9 @@ const missionItems = [
     icon: <Leaf className="text-secondary" size={32} />,
     title: "Designed for Real Life",
     description:
-      "Every MYOREVA product is created with care-made to support your everyday wellness in ways that feel natural, simple, and effective.",
+      "Every MYOREVA product is created with care-made to support your everyday wellness in ways that feel simple, and effective.",
   },
-  
-  {
-    icon: <Heart className="text-secondary" size={32} />,
-    title: "Customer First",
-    description:
-      "We're committed to exceptional customer service and creating products that address the real wellness needs of our community.",
-  },
+
 ];
 
 // Helper component for slide cards
@@ -58,7 +59,7 @@ const AboutPage: React.FC = () => {
             <div>
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
               <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                MYOREVA was founded with a simple mission: to provide premium wellness products that unite the finest remedies with modern science.
+                MYOREVA was founded with a simple mission: to provide effective products that unite the finest remedies with modern science.
               </p>
               <div className="flex items-center">
                 <Leaf className="text-secondary mr-3" size={24} />
@@ -142,7 +143,7 @@ const AboutPage: React.FC = () => {
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Join Our Wellness Journey</h2>
                 <p className="text-gray-600 mb-6 text-lg">
-                  Discover the MYOREVA difference with our premium wellness products designed for your health and well-being.
+                  Discover the MYOREVA difference with our products designed for your well-being.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link to="/products" className="btn btn-primary">
