@@ -120,7 +120,7 @@ const ProductsPage: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-12"
           >
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -130,7 +130,7 @@ const ProductsPage: React.FC = () => {
                 <Leaf size={16} />
                 <span>MYOREVA WELLNESS</span>
               </span>
-            </motion.div>
+            </motion.div> */}
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
