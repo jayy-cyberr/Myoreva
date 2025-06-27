@@ -57,6 +57,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-4">
         <h3 className="font-medium text-gray-800 mb-1 group-hover:text-secondary transition-colors">{product.name}</h3>
 
+        {/* Description */}
+  <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+    {product.description}
+  </p>
+
         {/* Removed rating and reviews */}
 
         <div className="flex items-center justify-between">

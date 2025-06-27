@@ -13,6 +13,7 @@ interface CarouselSlide {
   id: number;
   title: string;
   subtitle: string;
+  description: string;
   background: string;
   buttonText: string;
   buttonLink: string;
@@ -23,14 +24,17 @@ const carouselSlides: CarouselSlide[] = [
     id: 1,
     title: "Welcome to",
     subtitle: "MYOREVA WELLNESS",
+    description: "A Friend To Your Wellness",
     background: "https://images.pexels.com/photos/5938233/pexels-photo-5938233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "SHOP HERE",
     buttonLink: "/products"
+    
   },
   {
     id: 2,
     title: "Natural",
     subtitle: "HIGHLY EFFECTIVE",
+    description: "Simply made for you, shop with confidence",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "ORDER NOW",
     buttonLink: "/products"
@@ -39,6 +43,7 @@ const carouselSlides: CarouselSlide[] = [
     id: 3,
     title: "Premium",
     subtitle: "WART REMOVER",
+    description: "Say goodbye to warts, moles, and skin tags",
     background: "https://images.pexels.com/photos/3865560/pexels-photo-3865560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "BUY NOW",
     buttonLink: "/products"
@@ -47,6 +52,7 @@ const carouselSlides: CarouselSlide[] = [
     id: 4,
     title: "Transform Your Lifestyle",
     subtitle: "WELLNESS JOURNEY",
+    description: "Start a healthy journey with trusted solutions",
     background: "https://cdn.pixabay.com/photo/2022/06/01/08/57/watermelon-7235140_1280.jpg",
     buttonText: "ORDER NOW",
     buttonLink: "/products"
@@ -55,6 +61,7 @@ const carouselSlides: CarouselSlide[] = [
     id: 5,
     title: "Nature's Best",
     subtitle: "DELIVERED TO YOU",
+    description: "Buy our products made with your wellbeing in mind ",
     background: "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     buttonText: "SHOP HERE",
     buttonLink: "/products"
@@ -77,7 +84,7 @@ const featuredProducts = [
     id: 2,
     name: "Camping Gas Stove",
     category: "TRENDING",
-    description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
+    description: "Portable Windproof Camping Stove for Outdoor Adventures.",
     price: 38500,
     image: campGas,
     rating: 0,
@@ -99,7 +106,7 @@ const featuredProducts = [
     id: 4,
     name: "Camping Gas Stove",
     category: "TRENDING",
-    description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
+    description: "Portable Windproof Camping Stove for Outdoor Adventures.",
     price: 38500,
     image: campGa,
     rating: 0,
@@ -240,8 +247,9 @@ const HomePage: React.FC = () => {
                     transition={{ duration: 1, delay: 0.6 }}
                     className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl"
                   >
-                    A Friend To Your Wellness
+                    {carouselSlides[currentSlide].description}
                   </motion.p>
+                  
 
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -293,7 +301,7 @@ const HomePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-
+{/* 
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <div className="flex items-center space-x-3">
                       <Truck className="text-green-300" size={24} />
@@ -302,7 +310,7 @@ const HomePage: React.FC = () => {
                         <p className="text-green-200 text-sm">Local & INTL.</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <div className="flex items-center space-x-3">
@@ -435,6 +443,11 @@ const HomePage: React.FC = () => {
         <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
           {product.name}
         </h3>
+
+        {/* Description */}
+  <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+    {product.description}
+  </p>
 
         {/* Removed star ratings and reviews count */}
 
