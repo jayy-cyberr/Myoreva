@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Minus, Plus, ShoppingCart, Star, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
+import { Minus, Plus, ShoppingCart, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductById, getProductsByCategory } from '../data/products';
 import { useCart } from '../contexts/CartContext';
@@ -10,16 +10,14 @@ const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  
+
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
   const [activeImage, setActiveImage] = useState(0);
   const [openSection, setOpenSection] = useState<string | null>('description');
-  
-  // Fetch product details
+
   const product = getProductById(Number(productId));
-  
-  // Handle product not found
+
   if (!product) {
     return (
       <div className="container-custom py-16 text-center">
@@ -31,15 +29,11 @@ const ProductDetailPage: React.FC = () => {
       </div>
     );
   }
-  
-  // Get related products
+
   const relatedProducts = getProductsByCategory(product.category)
     .filter(p => p.id !== product.id)
     .slice(0, 4);
-  
-  // Calculate average rating
-  const avgRating = product.reviews.reduce((total, review) => total + review.rating, 0) / product.reviews.length;
-  
+
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
@@ -48,31 +42,28 @@ const ProductDetailPage: React.FC = () => {
       image: product.image
     });
   };
-  
+
   const decrementQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
-  
+
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
   };
-  
+
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };
-  
-  // Multiple images for gallery
+
   const productImages = [
     product.image,
-    // Additional images could be fetched from an expanded product object
     "https://images.pexels.com/photos/4464821/pexels-photo-4464821.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     "https://images.pexels.com/photos/4465124/pexels-photo-4465124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
   ];
-  
+
   return (
     <div className="bg-background py-8 md:py-12">
       <div className="container-custom">
-        {/* Breadcrumb */}
         <div className="mb-6">
           <button 
             onClick={() => navigate(-1)}
@@ -82,11 +73,9 @@ const ProductDetailPage: React.FC = () => {
             Back
           </button>
         </div>
-        
-        {/* Product Detail */}
+
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-12">
           <div className="grid md:grid-cols-2 gap-8 p-6 md:p-8">
-            {/* Product Images */}
             <div>
               <div className="mb-4 overflow-hidden rounded-lg">
                 <motion.img
@@ -114,26 +103,10 @@ const ProductDetailPage: React.FC = () => {
                 ))}
               </div>
             </div>
-            
-            {/* Product Info */}
+
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">{product.name}</h1>
-              
-              <div className="flex items-center mb-4">
-                <div className="flex mr-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      size={18} 
-                      className={i < Math.round(avgRating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600">
-                  {product.reviews.length} reviews
-                </span>
-              </div>
-              
+
               <div className="mb-6">
                 {product.originalPrice ? (
                   <div className="flex items-center">
@@ -148,10 +121,9 @@ const ProductDetailPage: React.FC = () => {
                 )}
                 <p className="text-sm text-green-600 mt-1">In Stock</p>
               </div>
-              
+
               <p className="text-gray-600 mb-6">{product.description}</p>
-              
-              {/* Quantity Selector */}
+
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
                 <div className="flex">
@@ -178,8 +150,7 @@ const ProductDetailPage: React.FC = () => {
                   </button>
                 </div>
               </div>
-              
-              {/* Add to Cart */}
+
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
                 <button
                   onClick={handleAddToCart}
@@ -196,16 +167,14 @@ const ProductDetailPage: React.FC = () => {
                   Buy Now
                 </Link>
               </div>
-              
-              {/* Product Meta */}
+
               <div className="text-sm text-gray-600">
                 <p>Category: <span className="capitalize">{product.category}</span></p>
                 <p>SKU: MYOREVA-{product.id.toString().padStart(4, '0')}</p>
               </div>
             </div>
           </div>
-          
-          {/* Product Details Tabs (Desktop) */}
+
           <div className="hidden md:block border-t border-gray-200">
             <div className="flex border-b border-gray-200">
               <button
@@ -242,77 +211,36 @@ const ProductDetailPage: React.FC = () => {
                   How to Use
                 </button>
               )}
-              <button
-                onClick={() => setActiveTab('reviews')}
-                className={`px-6 py-3 font-medium text-sm ${
-                  activeTab === 'reviews'
-                    ? 'border-b-2 border-secondary text-secondary'
-                    : 'text-gray-600 hover:text-gray-800'
-                }`}
-              >
-                Reviews ({product.reviews.length})
-              </button>
             </div>
-            
+
             <div className="p-6">
               {activeTab === 'description' && (
                 <div>
                   <p className="text-gray-700">{product.details}</p>
                 </div>
               )}
-              
               {activeTab === 'ingredients' && product.ingredients && (
                 <div>
                   <p className="text-gray-700">{product.ingredients}</p>
                 </div>
               )}
-              
               {activeTab === 'how-to-use' && product.howToUse && (
                 <div>
                   <p className="text-gray-700">{product.howToUse}</p>
                 </div>
               )}
-              
-              {activeTab === 'reviews' && (
-                <div>
-                  {product.reviews.map((review, idx) => (
-                    <div key={idx} className={`${idx > 0 ? 'border-t border-gray-200 pt-4' : ''} mb-4`}>
-                      <div className="flex items-center mb-2">
-                        <div className="flex mr-2">
-                          {[...Array(5)].map((_, i) => (
-                            <Star 
-                              key={i} 
-                              size={16} 
-                              className={i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-                            />
-                          ))}
-                        </div>
-                        <span className="font-medium">{review.user}</span>
-                        <span className="text-gray-500 text-sm ml-2">{review.date}</span>
-                      </div>
-                      <p className="text-gray-700">{review.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
-          
-          {/* Product Details Accordion (Mobile) */}
+
           <div className="md:hidden border-t border-gray-200 px-6 pb-6">
             <div className="divide-y divide-gray-200">
-              {/* Description */}
               <div className="py-4">
                 <button
                   onClick={() => toggleSection('description')}
                   className="flex justify-between items-center w-full"
                 >
                   <span className="font-medium">Description</span>
-                  {openSection === 'description' ? (
-                    <ChevronUp size={18} />
-                  ) : (
-                    <ChevronDown size={18} />
-                  )}
+                  {openSection === 'description' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                 </button>
                 <AnimatePresence>
                   {openSection === 'description' && (
@@ -328,8 +256,6 @@ const ProductDetailPage: React.FC = () => {
                   )}
                 </AnimatePresence>
               </div>
-              
-              {/* Ingredients */}
               {product.ingredients && (
                 <div className="py-4">
                   <button
@@ -337,11 +263,7 @@ const ProductDetailPage: React.FC = () => {
                     className="flex justify-between items-center w-full"
                   >
                     <span className="font-medium">Ingredients</span>
-                    {openSection === 'ingredients' ? (
-                      <ChevronUp size={18} />
-                    ) : (
-                      <ChevronDown size={18} />
-                    )}
+                    {openSection === 'ingredients' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </button>
                   <AnimatePresence>
                     {openSection === 'ingredients' && (
@@ -358,8 +280,6 @@ const ProductDetailPage: React.FC = () => {
                   </AnimatePresence>
                 </div>
               )}
-              
-              {/* How to Use */}
               {product.howToUse && (
                 <div className="py-4">
                   <button
@@ -367,11 +287,7 @@ const ProductDetailPage: React.FC = () => {
                     className="flex justify-between items-center w-full"
                   >
                     <span className="font-medium">How to Use</span>
-                    {openSection === 'how-to-use' ? (
-                      <ChevronUp size={18} />
-                    ) : (
-                      <ChevronDown size={18} />
-                    )}
+                    {openSection === 'how-to-use' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </button>
                   <AnimatePresence>
                     {openSection === 'how-to-use' && (
@@ -388,58 +304,10 @@ const ProductDetailPage: React.FC = () => {
                   </AnimatePresence>
                 </div>
               )}
-              
-              {/* Reviews */}
-              <div className="py-4">
-                <button
-                  onClick={() => toggleSection('reviews')}
-                  className="flex justify-between items-center w-full"
-                >
-                  <span className="font-medium">Reviews ({product.reviews.length})</span>
-                  {openSection === 'reviews' ? (
-                    <ChevronUp size={18} />
-                  ) : (
-                    <ChevronDown size={18} />
-                  )}
-                </button>
-                <AnimatePresence>
-                  {openSection === 'reviews' && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-2 space-y-4">
-                        {product.reviews.map((review, idx) => (
-                          <div key={idx} className={`${idx > 0 ? 'border-t border-gray-100 pt-4' : ''}`}>
-                            <div className="flex items-center mb-2">
-                              <div className="flex mr-2">
-                                {[...Array(5)].map((_, i) => (
-                                  <Star 
-                                    key={i} 
-                                    size={14} 
-                                    className={i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-                                  />
-                                ))}
-                              </div>
-                              <span className="font-medium text-sm">{review.user}</span>
-                            </div>
-                            <p className="text-gray-700 text-sm">{review.comment}</p>
-                            <p className="text-gray-500 text-xs mt-1">{review.date}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
             </div>
           </div>
         </div>
-        
-        {/* Related Products */}
+
         {relatedProducts.length > 0 && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-6">You May Also Like</h2>

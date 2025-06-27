@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import { Product } from '../../data/products';
 import { motion } from 'framer-motion';
@@ -22,9 +22,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     });
   };
 
-  // Calculate average rating
-  const avgRating = product.reviews.reduce((total, review) => total + review.rating, 0) / product.reviews.length;
-
   return (
     <motion.a
       href={product.link}
@@ -44,30 +41,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             Now selling
           </div>
         )}
-        <button
+        
+
+
+
+        {/* <button
           onClick={handleAddToCart}
           className="absolute bottom-4 right-4 bg-white text-primary p-3 rounded-full shadow-md opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-secondary hover:text-white"
           aria-label="Add to cart"
         >
           <ShoppingCart size={18} />
-        </button>
+        </button> */}
       </div>
 
       <div className="p-4">
         <h3 className="font-medium text-gray-800 mb-1 group-hover:text-secondary transition-colors">{product.name}</h3>
 
-        <div className="flex items-center mb-2">
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star 
-                key={i} 
-                size={14} 
-                className={i < Math.round(avgRating) ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}
-              />
-            ))}
-          </div>
-          <span className="ml-1 text-xs text-gray-500">({product.reviews.length})</span>
-        </div>
+        {/* Removed rating and reviews */}
 
         <div className="flex items-center justify-between">
           <div>

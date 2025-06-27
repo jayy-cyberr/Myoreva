@@ -69,8 +69,8 @@ const featuredProducts = [
     description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbesty,
-    rating: 5,
-    reviews: 5,
+    rating: 0,
+    // reviews: [],
     redirectUrl: "https://sabimarket.com.ng/wart-remover/"
   },
   {
@@ -80,8 +80,8 @@ const featuredProducts = [
     description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
     price: 38500,
     image: campGas,
-    rating: 4,
-    reviews: 8,
+    rating: 0,
+    // reviews: [],
     redirectUrl: "https://sabimarket.com.ng/camp-gas/"
   },
   {
@@ -91,8 +91,8 @@ const featuredProducts = [
     description: "Permanent Solution to all kinds of warts, skin tags and moles without spending a huge amount of money on surgeries.",
     price: 13500,
     image: Hbest,
-    rating: 5,
-    reviews: 12,
+    rating: 0,
+    reviews: [],
     redirectUrl: "https://sabimarket.com.ng/wart-remover/"
   },
   {
@@ -102,8 +102,8 @@ const featuredProducts = [
     description: "Portable Windproof Camping Stove - Stainless Steel Designed for Outdoor Adventures.",
     price: 38500,
     image: campGa,
-    rating: 4,
-    reviews: 6,
+    rating: 0,
+    reviews: [],
     redirectUrl: "https://sabimarket.com.ng/camp-gas/"
   }
 ];
@@ -408,72 +408,54 @@ const HomePage: React.FC = () => {
           </div>
 
           {/* Products Grid - 2 columns on mobile */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {featuredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 40, }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
-              >
-                <div className="relative group">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  {/* <button className="absolute top-3 right-3 p-2 bg-white/80 hover:bg-white rounded-full transition-colors">
-                    <Heart size={16} className="text-gray-600 hover:text-red-500" />
-                  </button> */}
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
-                      {product.category}
-                    </span>
+<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+  {featuredProducts.map((product, index) => (
+    <motion.div
+      key={product.id}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+    >
+      <div className="relative group">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-700"
+        />
+        <div className="absolute top-3 left-3">
+          <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+            {product.category}
+          </span>
+        </div>
+      </div>
 
-                    
-                  </div>
-                </div>
+      <div className="p-3 md:p-4">
+        <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
+          {product.name}
+        </h3>
 
-                <div className="p-3 md:p-4">
-                  <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
-                    {product.name}
-                  </h3>
+        {/* Removed star ratings and reviews count */}
 
-                  <div className="flex items-center mb-2">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={12}
-                          className={i < product.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
-                        />
-                      ))}
-                    </div>
-                    <span className="ml-1 text-xs text-gray-600">
-                      {product.reviews}
-                    </span>
-                  </div>
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-bold text-lg text-gray-900">
+            ₦{product.price.toLocaleString()}
+          </span>
+        </div>
 
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-bold text-lg text-gray-900">
-                      ₦{product.price.toLocaleString()}
-                    </span>
-                  </div>
+        <a
+          href={product.redirectUrl}
+          rel="noopener noreferrer"
+          className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm"
+        >
+          Order Now
+        </a>
+      </div>
+    </motion.div>
+  ))}
+</div>
 
-                  <a
-                    href={product.redirectUrl}
-                    rel="noopener noreferrer"
-                    className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm"
-                  >
-                    Order Now
-                  </a>
-                </div>
-              </motion.div>
-              
-            ))}
-          </div>
 
 {/* View All Products Button */}
           <motion.div
@@ -495,7 +477,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      
+
 
       {/* Testimonials - */}
       <section className="py-20 bg-gradient-to-br from-gray-100 via-white to-gray-100 relative overflow-hidden">
