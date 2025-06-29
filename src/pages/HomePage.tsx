@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Truck, Star, Leaf, ChevronLeft, ChevronRight, Play, ZoomIn, Heart, Package, Award, Shield, Users } from 'lucide-react';
 import MagneticButton from '../components/MagneticButton';
-import Hbesty from '../assets/products/Hbesty.jpg';
-import Hbest from '../assets/products/Hbesty2.png';
-import campGas from'../assets/products/campgas.jpg';
-import campGa from'../assets/products/campgas2.jpg';
+import Hbesty from '../assets/products/IMG 2.jpg';
+import Hbest from '../assets/products/IMG 1.jpeg';
+import campGas from'../assets/products/IMG 3.jpg';
+import campGa from'../assets/products/IMG 3.jpg';
 
 interface CarouselSlide {
   id: number;

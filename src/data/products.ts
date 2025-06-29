@@ -19,10 +19,10 @@ export interface Product {
     date: string;
   }[];
 }
-import Hbesty from '../assets/products/Hbesty.jpg';
-import Hbest from '../assets/products/Hbesty2.png';
-import campGas from'../assets/products/campgas.jpg';
-import campGa from'../assets/products/campgas2.jpg';
+import Hbesty from '../assets/products/IMG 2.jpg';
+import Hbest from '../assets/products/IMG 1.jpeg';
+import campGas from'../assets/products/IMG 3.jpg';
+import campGa from'../assets/products/IMG 3.jpg';
 
 // Sample product data
 export const products: Product[] = [
