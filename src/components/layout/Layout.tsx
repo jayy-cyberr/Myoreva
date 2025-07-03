@@ -19,7 +19,7 @@ const Layout: React.FC = () => {
         <Outlet />
       </main>
       {!shouldHideLayout && <Footer />}
-      {shouldHideLayout && <WhatsAppWidget />}
+      {!shouldHideLayout && <WhatsAppWidget />}
     </div>
   );
 };
