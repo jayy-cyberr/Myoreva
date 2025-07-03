@@ -13,6 +13,10 @@ import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ScrollToTop from './components/ui/ScrollToTop';
+import WartRemoverLandingPage from "./pages/WartRemoverLandingPage";
+import ThankYouPage from "./pages/ThankYouPage";
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -31,6 +35,11 @@ function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/wart-remover" element={<WartRemoverLandingPage />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        
         </Route>
       </Routes>
     </>

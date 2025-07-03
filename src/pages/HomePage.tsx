@@ -78,7 +78,7 @@ const featuredProducts = [
     image: Hbesty,
     rating: 0,
     // reviews: [],
-    redirectUrl: "https://sabimarket.com.ng/wart-remover/"
+    redirectUrl: "/wart-remover"
   },
   {
     id: 2,
@@ -100,7 +100,7 @@ const featuredProducts = [
     image: Hbest,
     rating: 0,
     reviews: [],
-    redirectUrl: "https://sabimarket.com.ng/wart-remover/"
+    redirectUrl: "/wart-remover/"
   },
   {
     id: 4,
