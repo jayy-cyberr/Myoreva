@@ -17,6 +17,8 @@ import WartRemoverLandingPage from "./pages/WartRemoverLandingPage";
 import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import CampGasPage from './pages/CampGasLandingPage';
+import CampGasLandingPage from './pages/CampGasLandingPage';
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
         <Route path="/thank-you" element={<ThankYouPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/camp-gas" element={<CampGasLandingPage />} />
         
         </Route>
       </Routes>

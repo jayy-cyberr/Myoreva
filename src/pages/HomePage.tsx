@@ -89,7 +89,7 @@ const featuredProducts = [
     image: campGas,
     rating: 0,
     // reviews: [],
-    redirectUrl: "https://sabimarket.com.ng/camp-gas/"
+    redirectUrl: "/camp-gas/"
   },
   {
     id: 3,
@@ -111,7 +111,7 @@ const featuredProducts = [
     image: campGa,
     rating: 0,
     reviews: [],
-    redirectUrl: "https://sabimarket.com.ng/camp-gas/"
+    redirectUrl: "/camp-gas/"
   }
 ];
 
