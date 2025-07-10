@@ -8,7 +8,7 @@ const Layout: React.FC = () => {
   const location = useLocation();
 
   // Paths where Footer, Header, and WhatsAppWidget should be hidden
-  const hideLayoutPaths = ['/wart-remover'];
+  const hideLayoutPaths = ['/wart-remover', '/camp-gas'];
 
   const shouldHideLayout = hideLayoutPaths.includes(location.pathname);
 

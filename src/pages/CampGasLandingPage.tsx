@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { FaWhatsapp } from "react-icons/fa";
 
 import {
   Star,
@@ -9,7 +11,7 @@ import {
   Clock,
   CheckCircle,
   Phone,
-  MessageCircle,
+  Home,
   Zap,
   Wind,
   Users,
@@ -19,14 +21,14 @@ import {
   ArrowRight,
   Timer,
   ShoppingCart,
-  // Play,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
 
-
-export default function CampGasLandingPage() {
-  const navigate = useNavigate(); // ✅
+export default function CampGasLandpingPage() {
+  const navigate = useNavigate();
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 3,
@@ -70,7 +72,7 @@ export default function CampGasLandingPage() {
       originalPrice: "58,500",
       savings: "13,500",
       popular: true,
-      features: ["1 Professional Camp Gas Stove", "2 Gas Cylinders", "Free Delivery", "Easy Return Policy", "1 Year Warranty", "Extra Cylinder Bonus"]
+      features: ["1 Professional Camp Gas Stove", "2 Gas Cylinders", "Free Delivery", "Easy Return Policy", "1 Year Warranty",]
     },
     {
       id: "family",
@@ -148,11 +150,31 @@ export default function CampGasLandingPage() {
     "https://ext.same-assets.com/766014306/3829765178.jpeg"
   ];
 
-  // Video URLs (you can replace with actual product videos)
   const productVideos = [
     "https://ext.same-assets.com/766014306/2132041780.mp4",
     "https://ext.same-assets.com/766014306/2049059161.mp4"
   ];
+
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: "easeOut" }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const scaleIn = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.6, ease: "easeOut" }
+  };
 
   // Countdown timer
   useEffect(() => {
@@ -196,7 +218,7 @@ export default function CampGasLandingPage() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const triggerPoint = window.innerHeight * 0.8; // Show after 80% of viewport height
+      const triggerPoint = window.innerHeight * 0.8;
       setShowStickyOrder(scrollPosition > triggerPoint);
     };
 
@@ -209,14 +231,12 @@ export default function CampGasLandingPage() {
   const handleOrderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Store form data in localStorage for thank you page
     localStorage.setItem('orderData', JSON.stringify({
       ...orderForm,
       package: packages.find(p => p.id === orderForm.package),
       timestamp: new Date().toISOString()
     }));
 
-    // Redirect to thank you page instead of WhatsApp
     navigate('/thank-you');
   };
 
@@ -225,49 +245,115 @@ export default function CampGasLandingPage() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-orange-50 via-white to-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-800 via-green-600 to-yellow-400
+  
+        <div className="w-full bg-gradient-to-b from-green-50 via-white to-emerald-50 overflow-x-hidden">
 
-">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
+      {/* Hero Section */}
+      <section className="relative min-h-screen bg-gradient-to-br from-emerald-800 via-green-600 to-teal-500 overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          style={{ y: backgroundY }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_25%,rgba(255,255,255,0.05)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.05)_75%)] bg-[size:20px_20px]"></div>
+        </motion.div>
 
         <div className="container mx-auto px-4 py-8 sm:py-12 lg:py-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen">
             {/* Left Content */}
-            <div className="text-center lg:text-left space-y-6 lg:space-y-8">
-              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                <div className="bg-yellow-400 text-black hover:bg-yellow-500 px-3 py-2 text-xs sm:text-sm font-bold animate-pulse rounded-full">
+            <motion.div 
+              className="text-center lg:text-left space-y-6 lg:space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              <motion.div 
+                className="flex flex-wrap gap-2 justify-center lg:justify-start"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                <motion.div 
+                  className="bg-gradient-to-r from-yellow-400 to-amber-500 text-black hover:from-yellow-500 hover:to-amber-600 px-4 py-2 text-xs sm:text-sm font-bold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    rotate: [0, 1, -1, 0]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                >
                   🔥 LIMITED TIME OFFER
-                </div>
-                <div className="bg-green-500 text-white hover:bg-green-600 px-3 py-2 text-xs sm:text-sm font-bold rounded-full">
+                </motion.div>
+                <motion.div 
+                  className="bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 px-4 py-2 text-xs sm:text-sm font-bold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+                  whileHover={{ scale: 1.1, rotateZ: 5 }}
+                >
                   ✅ FREE DELIVERY
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              <div className="space-y-4">
+              <motion.div 
+                className="space-y-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                   Professional
-                  <span className="block text-yellow-300 drop-shadow-lg">Camp Gas Stove</span>
+                  <motion.span 
+                    className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-300 to-yellow-400 drop-shadow-lg"
+                    animate={{ 
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                    }}
+                    transition={{ 
+                      duration: 3, 
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    Camp Gas Stove
+                  </motion.span>
                 </h1>
-                <p className="text-lg sm:text-xl md:text-2xl text-gray-100 font-medium">
+                <motion.p 
+                  className="text-lg sm:text-xl md:text-2xl text-gray-100 font-medium"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                >
                   Cook Anywhere, Anytime as a Camper, Hiker & Adventure Lover
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
 
-              <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto lg:mx-0">
+              <motion.p 
+                className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto lg:mx-0"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+              >
                 Experience the ultimate outdoor cooking with our premium portable gas stove.
                 Perfect for camping, hiking, BBQ gatherings and all outdoor adventures.
-              </p>
+              </motion.p>
 
               {/* Pricing */}
-              <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-4 sm:p-6 max-w-md mx-auto lg:mx-0">
+              <motion.div 
+                className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 max-w-md mx-auto lg:mx-0 shadow-xl border border-white/20"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1, duration: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-300">₦38,500</div>
+                    <motion.div 
+                      className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-300"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      ₦38,500
+                    </motion.div>
                     <div className="text-sm sm:text-lg text-gray-300 line-through">₦46,500</div>
                   </div>
                   <div className="text-right">
@@ -282,319 +368,650 @@ export default function CampGasLandingPage() {
                     <span>Stock Alert: Only 14 left!</span>
                     <span>{stockProgress}/100 sold</span>
                   </div>
-                  <div className="w-full bg-gray-600 rounded-full h-2">
-                    <div
-                      className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${stockProgress}%` }}
-                    ></div>
+                  <div className="w-full bg-gray-600 rounded-full h-2 overflow-hidden">
+                    <motion.div
+                      className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${stockProgress}%` }}
+                      transition={{ duration: 2, delay: 1.2, ease: "easeOut" }}
+                    />
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Countdown Timer */}
-              <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-4 sm:p-6 max-w-md mx-auto lg:mx-0 shadow-2xl">
+              <motion.div 
+                className="bg-gradient-to-r from-emerald-700 to-teal-800 rounded-2xl p-4 sm:p-6 max-w-md mx-auto lg:mx-0 shadow-2xl border border-emerald-600/30"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.6 }}
+              >
                 <div className="flex items-center gap-2 mb-3">
-                  <Timer className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Timer className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300" />
+                  </motion.div>
                   <p className="text-xs sm:text-sm font-semibold text-yellow-300">OFFER EXPIRES IN:</p>
                 </div>
-                <div className="grid grid-cols-4 gap-2 text-center">
+                <motion.div 
+                  className="grid grid-cols-4 gap-2 text-center"
+                  variants={staggerContainer}
+                  animate="animate"
+                >
                   {[
-                    { label: "Days", value: timeLeft.days },
-                    { label: "Hours", value: timeLeft.hours },
-                    { label: "Mins", value: timeLeft.minutes },
+                    { label: "Days", value: timeLeft.days }, 
+                    { label: "Hours", value: timeLeft.hours }, 
+                    { label: "Mins", value: timeLeft.minutes }, 
                     { label: "Secs", value: timeLeft.seconds }
-                  ].map((item) => (
-                    <div key={item.label} className="bg-white/20 rounded-lg p-2 sm:p-3">
-                      <div className="text-lg sm:text-2xl font-bold text-white">{item.value.toString().padStart(2, '0')}</div>
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={item.label} 
+                      className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 hover:bg-white/30 transition-all duration-300"
+                      variants={fadeInUp}
+                      whileHover={{ scale: 1.1, rotate: 2 }}
+                    >
+                      <motion.div 
+                        className="text-lg sm:text-2xl font-bold text-white"
+                        key={item.value}
+                        initial={{ scale: 1.2, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {item.value.toString().padStart(2, '0')}
+                      </motion.div>
                       <div className="text-[10px] sm:text-xs text-gray-200">{item.label}</div>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
-                <button
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4, duration: 0.6 }}
+              >
+                <motion.button
                   onClick={scrollToPackages}
-                  className="bg-green-500 hover:bg-green-600 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 group w-full sm:w-auto"
+                  className="bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-bold rounded-full shadow-2xl w-full sm:w-auto relative overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <ShoppingCart className="mt-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 rounded-lg font-bold shadow-lg transition" />
-                  ORDER NOW - FREE DELIVERY
-                </button>
-                <button
+                  <motion.span
+                    className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent "
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <span className="relative z-10 ">ORDER NOW - FREE DELIVERY</span>
+                </motion.button>
+                {/* <motion.button
                   onClick={() => window.open('tel:08114580792')}
-                  className="border-2 border-white text-white hover:bg-white hover:text-red-600 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 w-full sm:w-auto"
+                  className="border-2 border-white text-white hover:bg-white hover:text-green-700 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 w-full sm:w-auto"
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,1)", color: "rgb(21, 128, 61)" }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2 inline" />
                   Call: 08114580792
-                </button>
-              </div>
-            </div>
+                </motion.button> */}
+              </motion.div>
+            </motion.div>
 
             {/* Right Content - Auto-sliding Product Gallery */}
-            <div className="relative mt-8 lg:mt-0">
+            <motion.div 
+              className="relative mt-8 lg:mt-0"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            >
               <div className="relative w-full max-w-lg mx-auto">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                  <div
-                    className="flex transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${currentProductImage * 100}%)` }}
-                  >
-                    {productImages.map((image, index) => (
-                      <div key={index} className="w-full flex-shrink-0">
-                        <div className="aspect-square relative">
-                          <img
-                            src={image}
-                            alt={`Professional Camp Gas Stove ${index + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <motion.div 
+                  className="relative overflow-hidden rounded-2xl shadow-2xl"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentProductImage}
+                      initial={{ opacity: 0, scale: 1.1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="aspect-square relative"
+                    >
+                      <img
+                        src={productImages[currentProductImage]}
+                        alt={`Professional Camp Gas Stove ${currentProductImage + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.div>
 
                 {/* Manual navigation */}
-                <button
+                <motion.button
                   onClick={() => setCurrentProductImage((prev) => (prev - 1 + productImages.length) % productImages.length)}
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm"
+                  whileHover={{ scale: 1.1, x: -2 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   onClick={() => setCurrentProductImage((prev) => (prev + 1) % productImages.length)}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm"
+                  whileHover={{ scale: 1.1, x: 2 }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <ChevronRight className="w-5 h-5" />
-                </button>
+                </motion.button>
 
                 {/* Floating badges */}
-                <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 z-10">
-                  <div className="bg-green-500 text-white px-2 sm:px-4 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold animate-bounce shadow-lg">
-                    <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1 inline" />
-                    Best Seller
-                  </div>
-                </div>
-                <div className="absolute -bottom-2 sm:-bottom-4 -right-2 sm:-right-4 z-10">
-                  <div className="bg-red-500 text-white px-2 sm:px-4 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold animate-pulse shadow-lg">
+                <motion.div 
+                  className="absolute -bottom-2 sm:-bottom-4 -right-2 sm:-right-4 z-10"
+                  animate={{ 
+                    y: [0, 10, 0],
+                    rotate: [0, -5, 0]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }}
+                >
+                  <div className="bg-gradient-to-r from-red-500 to-orange-600 text-white px-2 sm:px-4 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-lg">
                     <Truck className="w-3 h-3 sm:w-4 sm:h-4 mr-1 inline" />
                     Free Shipping
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-
-
-
-
-
       {/* Product Video Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-orange-100 to-red-100">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-orange-200 text-orange-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-100 relative">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          style={{ y: backgroundY }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(16,185,129,0.1),transparent_50%)]"></div>
+        </motion.div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div 
+              className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
               See CAMPING GAS™ In Action
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            </motion.div>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               Watch How Easy It Is To Use
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               See why thousands of outdoor enthusiasts choose our professional camp gas stove for their adventures
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {productVideos.map((video, index) => (
-              <div key={index} className="relative group">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-900">
+              <motion.div
+                key={index}
+                className="relative group"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                whileHover={{ y: -10 }}
+              >
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-900 transition-all duration-500 group-hover:shadow-3xl">
                   <video
-                    className="w-full h-64 sm:h-80 object-cover"
+                    className="w-full h-64 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
                     poster={productImages[index]}
                     controls
                   >
                     <source src={video} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300"></div>
-                  <div className="absolute top-4 left-4">
-                    <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 group-hover:from-black/20 transition-all duration-500"></div>
+                  <motion.div 
+                    className="absolute top-4 left-4"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                       LIVE DEMO
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Product Images Gallery */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-emerald-50 to-teal-100 relative overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 opacity-20"
+          animate={{ 
+            backgroundPosition: ["0% 0%", "100% 100%"],
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity, 
+            repeatType: "reverse",
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(16,185,129,0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(5,150,105,0.1) 0%, transparent 50%)`
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div 
+              className="inline-block bg-gradient-to-r from-emerald-100 to-green-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              whileHover={{ scale: 1.05, rotate: 1 }}
+            >
               Product Gallery
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            </motion.div>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               Every Detail Matters
-            </h2>
-          </div>
+            </motion.h2>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {productImages.map((image, index) => (
-              <div key={index} className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                <div className="aspect-square">
-                  <img
+              <motion.div
+                key={index}
+                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500"
+                variants={scaleIn}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotate: 2,
+                  zIndex: 10
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="aspect-square relative overflow-hidden">
+                  <motion.img
                     src={image}
                     alt={`Camp Gas Stove Detail ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700"
+                    whileHover={{ scale: 1.15 }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                  />
+                  <motion.div
+                    className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileHover={{ opacity: 1, y: 0 }}
+                  >
+                    <p className="text-sm font-semibold">Professional Quality</p>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-block bg-orange-200 text-orange-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-100 relative">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          animate={{ 
+            background: [
+              "radial-gradient(circle at 0% 0%, rgba(249,115,22,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 100% 100%, rgba(249,115,22,0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 0% 0%, rgba(249,115,22,0.1) 0%, transparent 50%)"
+            ]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div 
+              className="inline-block bg-gradient-to-r from-orange-100 to-amber-200 text-orange-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
               Why Choose Our Camping Gas Stove
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            </motion.div>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               You Can't Be Disappointed On Your Outdoor Trip!
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               Our gas cylinders are designed to provide consistent flow of gas, ensuring you have enough power for all your needs.
               Made with high-quality materials and undergo rigorous testing to ensure your safety.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <motion.div 
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="group hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 sm:hover:-translate-y-4 shadow-lg bg-white rounded-2xl overflow-hidden"
+                className="group hover:shadow-2xl transition-all duration-500 shadow-lg bg-white rounded-2xl overflow-hidden relative"
+                variants={fadeInUp}
+                whileHover={{ 
+                  y: -8,
+                  scale: 1.02,
+                  rotateY: 5
+                }}
+                style={{ 
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px"
+                }}
               >
-                <div className="p-6 sm:p-8 text-center relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="text-orange-500 mb-4 sm:mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 flex justify-center">
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-orange-600 transition-colors">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-red-500/5 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                />
+                <div className="p-6 sm:p-8 text-center relative z-10">
+                  <motion.div 
+                    className="text-orange-500 mb-4 sm:mb-6 flex justify-center"
+                    whileHover={{ 
+                      scale: 1.2,
+                      rotate: 360,
+                      color: "#f97316"
+                    }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    {feature.icon}
+                  </motion.div>
+                  <motion.h3 
+                    className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-orange-600 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {feature.title}
+                  </motion.h3>
+                  <motion.p 
+                    className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                    initial={{ opacity: 0.8 }}
+                    whileHover={{ opacity: 1 }}
+                  >
+                    {feature.description}
+                  </motion.p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-
-
-{/* Trust Indicators */}
-      <section className="py-6 sm:py-8 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
-            <div className="space-y-1 sm:space-y-2 transform hover:scale-105 transition-transform duration-300">
-              <div className="text-2xl sm:text-3xl font-bold text-green-400">86+</div>
-              <div className="text-xs sm:text-sm text-gray-300">Happy Customers This Week</div>
-            </div>
-            <div className="space-y-1 sm:space-y-2 transform hover:scale-105 transition-transform duration-300">
-              <div className="text-2xl sm:text-3xl font-bold text-blue-400">100</div>
-              <div className="text-xs sm:text-sm text-gray-300">Units Imported</div>
-            </div>
-            <div className="space-y-1 sm:space-y-2 transform hover:scale-105 transition-transform duration-300">
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400">24hrs</div>
-              <div className="text-xs sm:text-sm text-gray-300">Fast Delivery</div>
-            </div>
-            <div className="space-y-1 sm:space-y-2 transform hover:scale-105 transition-transform duration-300">
-              <div className="text-2xl sm:text-3xl font-bold text-red-400">14</div>
-              <div className="text-xs sm:text-sm text-gray-300">Units Left</div>
-            </div>
-          </div>
+      {/* Trust Indicators */}
+      <section className="py-6 sm:py-8 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 text-white relative overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 opacity-20"
+          animate={{ 
+            backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"]
+          }}
+          transition={{ 
+            duration: 15, 
+            repeat: Infinity, 
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)"
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            {[
+              { value: "86+", label: "Happy Customers This Week", color: "text-green-400", icon: "🎯" },
+              { value: "100", label: "Units Imported", color: "text-blue-400", icon: "📦" },
+              { value: "24hrs", label: "Fast Delivery", color: "text-yellow-400", icon: "⚡" },
+              { value: "14", label: "Units Left", color: "text-red-400", icon: "🔥" }
+            ].map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="space-y-1 sm:space-y-2 transform hover:scale-105 transition-transform duration-300 p-4 rounded-lg hover:bg-white/10"
+                variants={fadeInUp}
+                whileHover={{ scale: 1.1 }}
+              >
+                <motion.div 
+                  className="text-2xl mb-2"
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    delay: index * 0.5
+                  }}
+                >
+                  {stat.icon}
+                </motion.div>
+                <motion.div 
+                  className={`text-2xl sm:text-3xl font-bold ${stat.color}`}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.6, type: "spring" }}
+                >
+                  {stat.value}
+                </motion.div>
+                <div className="text-xs sm:text-sm text-gray-300">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
-
-
-
 
       {/* Testimonials Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-orange-50 to-red-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-block bg-green-200 text-green-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 relative overflow-hidden">
+        <motion.div 
+          className="absolute inset-0 opacity-30"
+          animate={{ 
+            rotate: [0, 360]
+          }}
+          transition={{ 
+            duration: 50, 
+            repeat: Infinity, 
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: `conic-gradient(from 0deg at 50% 50%, rgba(249,115,22,0.1) 0deg, transparent 90deg, rgba(239,68,68,0.1) 180deg, transparent 270deg)`
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div 
+              className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
               Customer Reviews
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            </motion.div>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               Our Happy Customers Reviews
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600">
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-600"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               Join thousands of satisfied customers across Nigeria who trust our products
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           <div className="max-w-4xl mx-auto">
             <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl">
-              <div
-                className="flex transition-transform duration-700 ease-in-out"
-                style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-2 sm:px-4">
-                    <div className="bg-white shadow-2xl rounded-2xl overflow-hidden">
-                      <div className="p-6 sm:p-8 lg:p-12 text-center">
-                        <div className="flex justify-center mb-4 sm:mb-6">
-                          {[...Array(testimonial.rating)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 fill-current" />
-                          ))}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.7, ease: "easeInOut" }}
+                  className="px-2 sm:px-4"
+                >
+                  <motion.div 
+                    className="bg-white shadow-2xl rounded-2xl overflow-hidden hover:shadow-3xl transition-all duration-500"
+                    whileHover={{ scale: 1.02, y: -5 }}
+                  >
+                    <div className="p-6 sm:p-8 lg:p-12 text-center">
+                      <motion.div 
+                        className="flex justify-center mb-4 sm:mb-6"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.2, duration: 0.6 }}
+                      >
+                        {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, rotate: 0 }}
+                            animate={{ opacity: 1, rotate: 360 }}
+                            transition={{ delay: i * 0.1, duration: 0.5 }}
+                          >
+                            <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 fill-current mx-0.5" />
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                      <motion.blockquote 
+                        className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-6 sm:mb-8 italic leading-relaxed"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                      >
+                        "{testimonials[currentTestimonial].text}"
+                      </motion.blockquote>
+                      <motion.div 
+                        className="flex items-center justify-center space-x-3 sm:space-x-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6, duration: 0.6 }}
+                      >
+                        <motion.img
+                          src={testimonials[currentTestimonial].image}
+                          alt={testimonials[currentTestimonial].name}
+                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover ring-4 ring-orange-200"
+                          whileHover={{ scale: 1.1 }}
+                        />
+                        <div className="text-left">
+                          <h4 className="font-bold text-gray-900 text-base sm:text-lg">
+                            {testimonials[currentTestimonial].name}
+                          </h4>
+                          <p className="text-sm sm:text-base text-gray-600 flex items-center">
+                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                            {testimonials[currentTestimonial].location}
+                          </p>
                         </div>
-                        <blockquote className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-6 sm:mb-8 italic leading-relaxed">
-                          "{testimonial.text}"
-                        </blockquote>
-                        <div className="flex items-center justify-center space-x-3 sm:space-x-4">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover ring-4 ring-orange-200"
-                          />
-                          <div className="text-left">
-                            <h4 className="font-bold text-gray-900 text-base sm:text-lg">{testimonial.name}</h4>
-                            <p className="text-sm sm:text-base text-gray-600 flex items-center">
-                              <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                              {testimonial.location}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      </motion.div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Testimonial dots */}
             <div className="flex justify-center mt-6 sm:mt-8 space-x-2 sm:space-x-3">
               {testimonials.map((_, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => setCurrentTestimonial(index)}
                   className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
-                    index === currentTestimonial ? 'bg-orange-500 scale-125' : 'bg-gray-300'
+                    index === currentTestimonial ? 'bg-orange-500' : 'bg-gray-300'
                   }`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
+                  animate={{ 
+                    scale: index === currentTestimonial ? 1.3 : 1
+                  }}
                 />
               ))}
             </div>
@@ -603,189 +1020,361 @@ export default function CampGasLandingPage() {
       </section>
 
       {/* Package Selection */}
-      <section id="packages" className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-block bg-red-200 text-red-800 px-4 py-2 rounded-full text-sm font-bold mb-6">
+      <section id="packages" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-white via-gray-50 to-slate-100 relative">
+        <motion.div 
+          className="absolute inset-0 opacity-20"
+          animate={{ 
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"]
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity, 
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: `radial-gradient(circle at 20% 20%, rgba(239,68,68,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16,185,129,0.1) 0%, transparent 50%)`
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            className="text-center mb-12 sm:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div 
+              className="inline-block bg-gradient-to-r from-red-100 to-rose-200 text-red-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+            >
               Choose Your Package
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            </motion.div>
+            <motion.h2 
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
               Select Your Perfect Package
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600">
+            </motion.h2>
+            <motion.p 
+              className="text-lg sm:text-xl text-gray-600"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               All packages include free delivery nationwide and easy return policy
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-            {packages.map((pkg, ) => (
-              <div
+          <motion.div 
+            className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {packages.map((pkg, index) => (
+              <motion.div
                 key={pkg.id}
-                className={`relative overflow-hidden transition-all duration-500 transform hover:scale-105 rounded-2xl shadow-lg ${
+                className={`relative overflow-hidden transition-all duration-500 rounded-2xl shadow-lg cursor-pointer ${
                   pkg.popular
                     ? 'ring-4 ring-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-red-50'
-                    : 'hover:shadow-xl bg-white'
+                    : 'hover:shadow-xl bg-white hover:bg-gradient-to-br hover:from-gray-50 hover:to-slate-100'
                 } ${selectedPackage === pkg.id ? 'ring-2 ring-blue-500' : ''}`}
                 onClick={() => setSelectedPackage(pkg.id)}
+                variants={fadeInUp}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -10,
+                  rotateY: pkg.popular ? 0 : 3
+                }}
+                style={{ 
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px"
+                }}
               >
                 {pkg.popular && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                    <div className="bg-orange-500 text-white px-4 sm:px-6 py-2 rounded-full font-bold shadow-lg text-xs sm:text-sm">
+                  <motion.div 
+                    className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+                    animate={{ 
+                      y: [-2, 2, -2],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 sm:px-6 py-2 rounded-full font-bold shadow-lg text-xs sm:text-sm">
                       🎯 MOST POPULAR
                     </div>
-                  </div>
+                  </motion.div>
                 )}
 
                 <div className="text-center pt-6 sm:pt-8 px-6">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
+                  <motion.h3 
+                    className="text-xl sm:text-2xl font-bold text-gray-900 mb-2"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {pkg.name}
+                  </motion.h3>
                   <p className="text-sm sm:text-base text-gray-600 font-medium">{pkg.subtitle}</p>
 
                   <div className="py-4 sm:py-6">
-                    <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-red-600 mb-2">₦{pkg.price}</div>
+                    <motion.div 
+                      className="text-3xl sm:text-4xl lg:text-5xl font-bold text-red-600 mb-2"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      ₦{pkg.price}
+                    </motion.div>
                     <div className="text-base sm:text-lg text-gray-500 line-through mb-2">₦{pkg.originalPrice}</div>
-                    <div className="bg-green-500 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-full inline-block">
+                    <motion.div 
+                      className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-full inline-block shadow-lg"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       Save ₦{pkg.savings}
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
 
                 <div className="px-4 sm:px-6 pb-6 sm:pb-8">
                   <ul className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                     {pkg.features.map((feature, i) => (
-                      <li key={i} className="flex items-center text-sm sm:text-base text-gray-700">
+                      <motion.li 
+                        key={i} 
+                        className="flex items-center text-sm sm:text-base text-gray-700"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1, duration: 0.4 }}
+                      >
                         <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mr-2 sm:mr-3 flex-shrink-0" />
                         <span>{feature}</span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
 
-                  <button
-                    className={`w-full py-4 sm:py-6 text-base sm:text-lg font-bold rounded-full transition-all duration-300 ${
+                  <motion.button
+                    className={`w-full py-4 sm:py-6 text-base sm:text-lg font-bold rounded-full transition-all duration-300 relative overflow-hidden ${
                       pkg.popular
-                        ? 'bg-orange-500 hover:bg-orange-600 text-white transform hover:scale-105 shadow-lg'
-                        : 'bg-gray-900 hover:bg-gray-800 text-white'
+                        ? 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg'
+                        : 'bg-gradient-to-r from-gray-900 to-slate-800 hover:from-gray-800 hover:to-slate-700 text-white'
                     }`}
                     onClick={() => {
                       setOrderForm({...orderForm, package: pkg.id});
                       document.getElementById('order-form')?.scrollIntoView({ behavior: 'smooth' });
                     }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    Choose This Package
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 inline" />
-                  </button>
+                    <motion.span
+                      className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "100%" }}
+                      transition={{ duration: 0.6 }}
+                    />
+                    <span className="relative z-10 flex items-center justify-center">
+                      Choose This Package
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                    </span>
+                  </motion.button>
 
                   <p className="text-center text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4">
                     ORDER BEFORE 11:59pm AND Get Free DELIVERY
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center mt-8 sm:mt-12">
-            <div className="max-w-2xl mx-auto border-red-200 bg-red-50 rounded-lg p-4 border">
+          <motion.div 
+            className="text-center mt-8 sm:mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <motion.div 
+              className="max-w-2xl mx-auto border-red-200 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg p-4 border shadow-lg"
+              whileHover={{ scale: 1.02 }}
+            >
               <div className="flex items-center justify-center mb-2">
-                <Clock className="h-4 w-4 mr-2 text-red-600" />
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Clock className="h-4 w-4 mr-2 text-red-600" />
+                </motion.div>
                 <span className="text-red-800 font-medium text-sm sm:text-base">
                   <strong>ATTENTION:</strong>
                 </span>
               </div>
               <p className="text-red-800 text-sm sm:text-base">
-                If you CANNOT receive your order within 1-4 working days, DO NOT place an order.
+                If you CANNOT receive your order within 1-3 working days, please DO NOT place an order.
                 We will contact you immediately and start processing your order.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Order Form - sabimarket style */}
-      <section id="order-form" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-100 to-gray-200">
-        <div className="container mx-auto px-4">
+      {/* Order Form */}
+      <section id="order-form" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-100 via-slate-100 to-stone-200 relative">
+        <motion.div 
+          className="absolute inset-0 opacity-20"
+          animate={{ 
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"]
+          }}
+          transition={{ 
+            duration: 25, 
+            repeat: Infinity, 
+            ease: "linear"
+          }}
+          style={{
+            backgroundImage: `conic-gradient(from 0deg at 30% 70%, rgba(239,68,68,0.1) 0deg, transparent 120deg, rgba(16,185,129,0.1) 240deg, transparent 360deg)`
+          }}
+        />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 sm:p-8 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-2">PLACE ORDER YOUR BELOW...</h2>
-                <p className="text-base sm:text-lg opacity-90">Fill the form below to complete your order</p>
-              </div>
+            <motion.div 
+              className="bg-white rounded-2xl shadow-2xl overflow-hidden"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div 
+                className="bg-gradient-to-r from-red-600 via-red-700 to-rose-800 text-white p-6 sm:p-8 text-center relative overflow-hidden"
+                initial={{ opacity: 0, y: -30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                />
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2 relative z-10">PLACE ORDER YOUR BELOW...</h2>
+                <p className="text-base sm:text-lg opacity-90 relative z-10">Fill the form below to complete your order</p>
+              </motion.div>
 
-              <div className="p-6 sm:p-8">
+              <motion.div 
+                className="p-6 sm:p-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
                 <form onSubmit={handleOrderSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div>
+                  <motion.div 
+                    className="grid sm:grid-cols-2 gap-6"
+                    variants={staggerContainer}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                  >
+                    <motion.div variants={fadeInUp}>
                       <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                         YOUR FULL NAME *
                       </label>
-                      <input
+                      <motion.input
                         type="text"
                         required
                         value={orderForm.fullName}
                         onChange={(e) => setOrderForm({...orderForm, fullName: e.target.value})}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                         placeholder="Enter your full name"
+                        whileFocus={{ scale: 1.02 }}
                       />
-                    </div>
+                    </motion.div>
 
-                    <div>
+                    <motion.div variants={fadeInUp}>
                       <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                         YOUR PHONE NUMBER(S) *
                       </label>
-                      <input
+                      <motion.input
                         type="tel"
                         required
                         value={orderForm.phone}
                         onChange={(e) => setOrderForm({...orderForm, phone: e.target.value})}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                         placeholder="080XXXXXXXX"
+                        whileFocus={{ scale: 1.02 }}
                       />
                       <p className="text-xs text-gray-500 mt-1">
                         IF YOU HAVE MORE THAN 1 NUMBER THEN SEPERATE WITH COMMA(,).
                       </p>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
+                  >
                     <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                       ALTERNATIVE/WHATSAPP PHONE NUMBER
                     </label>
-                    <input
+                    <motion.input
                       type="tel"
                       value={orderForm.whatsappPhone}
                       onChange={(e) => setOrderForm({...orderForm, whatsappPhone: e.target.value})}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                       placeholder="NUMBER WE CAN REACH ON WHATSAPP"
+                      whileFocus={{ scale: 1.02 }}
                     />
                     <p className="text-xs text-gray-500 mt-1">
                       NUMBER WE CAN REACH ON WHATSAPP. THIS CAN BE YOUR WIFE'S, HUSBAND OR ANYBODY CLOSE TO YOU.
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                  >
                     <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                       FULL DELIVERY ADDRESS *
                     </label>
-                    <input
+                    <motion.input
                       type="text"
                       required
                       value={orderForm.address}
                       onChange={(e) => setOrderForm({...orderForm, address: e.target.value})}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                       placeholder="Please indicate any popular landmark"
+                      whileFocus={{ scale: 1.02 }}
                     />
-                  </div>
+                  </motion.div>
 
-                  <div className="grid sm:grid-cols-2 gap-6">
+                  <motion.div 
+                    className="grid sm:grid-cols-2 gap-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
                     <div>
                       <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                         CITY *
                       </label>
-                      <input
+                      <motion.input
                         type="text"
                         required
                         value={orderForm.city}
                         onChange={(e) => setOrderForm({...orderForm, city: e.target.value})}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                         placeholder="Your city"
+                        whileFocus={{ scale: 1.02 }}
                       />
                     </div>
 
@@ -793,72 +1382,102 @@ export default function CampGasLandingPage() {
                       <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                         STATE *
                       </label>
-                      <input
+                      <motion.input
                         type="text"
                         required
                         value={orderForm.state}
                         onChange={(e) => setOrderForm({...orderForm, state: e.target.value})}
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-colors"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
                         placeholder="Your state"
+                        whileFocus={{ scale: 1.02 }}
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                  >
                     <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                       KINDLY SELECT YOUR DESIRED PACKAGE *
                     </label>
                     <div className="space-y-3">
                       {packages.map((pkg) => (
-                        <label key={pkg.id} className="flex items-center cursor-pointer">
+                        <motion.label 
+                          key={pkg.id} 
+                          className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-red-200 hover:bg-red-50 transition-all duration-300"
+                          whileHover={{ scale: 1.02, x: 5 }}
+                        >
                           <input
                             type="radio"
                             name="package"
                             value={pkg.id}
                             checked={orderForm.package === pkg.id}
                             onChange={(e) => setOrderForm({...orderForm, package: e.target.value})}
-                            className="mr-3 text-red-500 focus:ring-red-500"
+                            className="mr-3 text-red-500 focus:ring-red-500 w-4 h-4"
                           />
-                          <span className="text-gray-700">
+                          <span className="text-gray-700 font-medium">
                             1 Camping Gas, {pkg.id === 'regular' ? '1' : pkg.id === 'silver' ? '2' : '3'} Cylinder = ₦{pkg.price}
                             {pkg.popular && ' (Popular Choice)'}
                             {pkg.id === 'family' && ' (Highly Recommended Family)'}
                           </span>
-                        </label>
+                        </motion.label>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                  >
                     <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">
                       ARE YOU AVAILABLE TO RECEIVE YOUR ORDER WITHIN 24-48HRS? *
                     </label>
                     <div className="space-y-2">
-                      <label className="flex items-center cursor-pointer">
+                      <motion.label 
+                        className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-green-200 hover:bg-green-50 transition-all duration-300"
+                        whileHover={{ scale: 1.02, x: 5 }}
+                      >
                         <input
                           type="radio"
                           name="availability"
                           value="yes"
-                          className="mr-3 text-red-500 focus:ring-red-500"
+                          className="mr-3 text-red-500 focus:ring-red-500 w-4 h-4"
                           required
                         />
-                        <span className="text-gray-700">YES</span>
-                      </label>
-                      <label className="flex items-center cursor-pointer">
+                        <span className="text-gray-700 font-medium">YES</span>
+                      </motion.label>
+                      <motion.label 
+                        className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-red-200 hover:bg-red-50 transition-all duration-300"
+                        whileHover={{ scale: 1.02, x: 5 }}
+                      >
                         <input
                           type="radio"
                           name="availability"
                           value="no"
-                          className="mr-3 text-red-500 focus:ring-red-500"
+                          className="mr-3 text-red-500 focus:ring-red-500 w-4 h-4"
                           required
                         />
-                        <span className="text-gray-700">NO</span>
-                      </label>
+                        <span className="text-gray-700 font-medium">NO</span>
+                      </motion.label>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="border-t pt-6">
-                    <div className="bg-gray-50 p-6 rounded-lg mb-6">
+                  <motion.div 
+                    className="border-t pt-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                  >
+                    <motion.div 
+                      className="bg-gradient-to-br from-gray-50 to-slate-100 p-6 rounded-lg mb-6 shadow-inner"
+                      whileHover={{ scale: 1.01 }}
+                    >
                       <h3 className="font-bold text-lg mb-4">Order Summary</h3>
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm sm:text-base">
@@ -876,25 +1495,86 @@ export default function CampGasLandingPage() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <button
+                    <motion.button
                       type="submit"
-                      className="w-full bg-red-600 hover:bg-red-700 text-white py-4 sm:py-6 text-lg sm:text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 uppercase"
+                      className="w-full bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white py-4 sm:py-6 text-lg sm:text-xl font-bold rounded-lg shadow-lg transition-all duration-300 uppercase relative overflow-hidden"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      Click Here To Order
-                    </button>
+                      <motion.span
+                        className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 0.8 }}
+                      />
+                      <span className="relative z-10">Click Here To Order</span>
+                    </motion.button>
 
                     <p className="text-center text-xs sm:text-sm text-gray-500 mt-4">
                       By clicking the button above, you'll be redirected to our thank you page
                     </p>
-                  </div>
+                  </motion.div>
                 </form>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
+
+    
+    {/* Sticky Order Button */}
+      <AnimatePresence>
+        {showStickyOrder && (
+          <motion.div 
+            className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-2xl border-t z-50 lg:hidden"
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.button 
+              onClick={scrollToPackages}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-4 text-lg font-semibold rounded-full shadow-lg relative overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              />
+              <span className="relative z-10 flex items-center justify-center">
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                ORDER NOW - ₦38,500 
+              </span>
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* WhatsApp Button */}
+      <motion.div 
+        className="fixed right-4 bottom-20 sm:bottom-4 z-50"
+        initial={{ scale: 0, rotate: 180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ delay: 2, duration: 0.5, type: "spring" }}
+      >
+        <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none flex items-center justify-center"
+              aria-label="Contact us on WhatsApp"
+            >
+              <a href=""></a>
+             <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
+            </svg>
+            </a>
+            </motion.div>
 
       {/* Social Proof Banner */}
       <section className="py-8 sm:py-12 bg-gradient-to-r from-green-600 to-green-700 text-white">
@@ -912,128 +1592,70 @@ export default function CampGasLandingPage() {
         </div>
       </section>
 
-      {/* Footer - sabimarket style */}
-      <footer className="bg-gray-900 text-white py-8 sm:py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h3 className="text-xl sm:text-2xl font-bold mb-4">Need Help?</h3>
-            <div className="space-y-2">
-              <p className="text-base sm:text-lg">CALL OUR CUSTOMER CARE LINE</p>
-              <a href="tel:08114580792" className="text-2xl sm:text-3xl font-bold text-green-400 hover:text-green-300 transition-colors">
-                08114580792
-              </a>
-            </div>
 
-            <div className="mt-6">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105"
-              >
-                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
-                Chat Us On WhatsApp
-              </a>
-            </div>
+      {/* Contact Section */}
+      <section className="bg-gray-900 text-white py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-orange-400 mb-8">NEED SOME HELP?</h2>
+
+          <div className="mb-8">
+            <p className="text-lg mb-4">CALL OUR CUSTOMER CARE LINE</p>
+            <a
+              href="tel:+2348114580792"
+              className="text-4xl font-bold text-white hover:text-orange-400 transition-colors duration-200"
+            >
+              +234 811 458 0792
+            </a>
           </div>
 
-          <div className="border-t border-gray-700 pt-8">
-            <div className="grid sm:grid-cols-3 gap-6 sm:gap-8 text-xs sm:text-sm mb-8">
-              <div>
-                <h4 className="font-bold mb-2">Product Features</h4>
-                <ul className="space-y-1 text-gray-400">
-                  <li>✓ Wind Resistant Design</li>
-                  <li>✓ Portable & Lightweight</li>
-                  <li>✓ High Quality Materials</li>
-                  <li>✓ Easy Setup & Use</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Delivery Info</h4>
-                <ul className="space-y-1 text-gray-400">
-                  <li>✓ Free Nationwide Delivery</li>
-                  <li>✓ 1-4 Working Days</li>
-                  <li>✓ Easy Return Policy</li>
-                  <li>✓ Secure Payment</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold mb-2">Contact</h4>
-                <ul className="space-y-1 text-gray-400">
-                  <li>📞 08114580792</li>
-                  <li>💬 WhatsApp Available</li>
-                  <li>🚚 Nigeria Wide Delivery</li>
-                  <li>⭐ 100% Customer Satisfaction</li>
-                </ul>
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+  <a
+    href="https://api.whatsapp.com/send?phone=+2348114580792&text=Hi,%20I%20want%20to%20buy%20WART%20REMOVER"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-lg transition-colors duration-200 flex items-center justify-center"
+  >
+    <FaWhatsapp className="w-5 h-5 mr-2" />
+    Chat Us On WhatsApp
+  </a>
+</div>
 
-            {/* Legal Links */}
-            <div className="text-center space-y-4 border-t border-gray-700 pt-6">
-              <div className="flex flex-wrap justify-center gap-4 text-sm">
-                <a href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-                <span className="text-gray-600">|</span>
-                <a href="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                <span className="text-gray-600">|</span>
-                <a href="/refund-policy" className="text-gray-400 hover:text-white transition-colors">Refund Policy</a>
-              </div>
 
-              {/* Facebook Disclaimer */}
-              <div className="bg-gray-800 p-4 rounded-lg text-xs text-gray-400 max-w-4xl mx-auto">
-                <p className="mb-2">
-                  <strong>Facebook Disclaimer:</strong> This website is not part of the Facebook website or Facebook Inc.
-                  Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.
-                </p>
-                <p>
-                  Results shown are not typical and individual results may vary. This site is not affiliated with Facebook or any other social media platform.
-                </p>
-              </div>
-
-              <p className="text-gray-400 text-xs sm:text-sm">
-                &copy; 2025 MyOreva Camp Gas. All rights reserved. | Make Camping More Fun And Easier!
-              </p>
-            </div>
+          <div className="space-y-4 text-lg">
+            <p><strong>Delivery Time:</strong> Within 1-3 Days.</p>
+            <p>You will receive a confirmation SMS/CALL from our customer care after you place your order.</p>
           </div>
+
+          <p className="text-sm text-gray-400 mt-8">
+            Order Before Timer Stops & Get Free Shipping
+          </p>
+          
+          <p className="text-center text-sm text-gray-600 mt-4 flex justify-center items-center gap-1">
+  <Home className="w-4 h-4 text-white" />
+  <a href="/" className="underline text-white hover:text-blue-600 ml-1">
+    Back to Main Homepage
+  </a>
+</p>
+
+        </div>
+      </section>
+
+
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm text-gray-400">
+            This Site Is Not A Part Of The Facebook Website Or Facebook Inc.
+            Additionally, This Site Is NOT Endorsed By Facebook In Any Way.
+            FACEBOOK Is A Trademark Of FACEBOOK, Inc.
+          </p>
+          <p className="text-xs text-center text-gray-500 mt-6">
+            <a href="/privacy-policy" className="underline hover:text-blue-500">Privacy Policy</a> • 
+            <a href="/terms" className="underline hover:text-blue-500 ml-2">Terms of Service</a>
+          </p>
         </div>
       </footer>
-
-      {/* Sticky ORDER NOW Button */}
-      {showStickyOrder && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white shadow-2xl border-t">
-          <div className="container mx-auto">
-            <button
-              onClick={scrollToPackages}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-4 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center"
-            >
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              ORDER NOW - FREE DELIVERY
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* WhatsApp Widget - positioned to not interfere with sticky button */}
-      <div className={`fixed right-4 sm:right-6 z-40 transition-all duration-300 ${showStickyOrder ? 'bottom-24' : 'bottom-4 sm:bottom-6'}`}>
-        <div className="relative group">
-          <div className="absolute bottom-full right-0 mb-2 sm:mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <div className="bg-gray-900 text-white text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-3 rounded-lg whitespace-nowrap shadow-lg">
-              <p className="font-semibold">Need Help?</p>
-              <p>Chat with us on WhatsApp</p>
-              <div className="absolute top-full right-4 sm:right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-            </div>
-          </div>
-
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none flex items-center justify-center group"
-            aria-label="Contact us on WhatsApp"
-          >
-            <MessageCircle className="w-6 h-6 sm:w-8 sm:h-8 group-hover:rotate-12 transition-transform" />
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

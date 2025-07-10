@@ -610,10 +610,20 @@ export default function WartRemoverLandingPage() {
               className="mx-auto rounded-lg shadow-lg object-cover max-w-xl w-full"
             />
           </div>
+<p className="text-3x1 mb-8">
+  <span className="text-orange-400 font-bold ">
+    <strong>ATTENTION:</strong>
+  </span>{' '}
+  <span className="text-black-800 text-sm sm:text-base block mt-2">
+    Note that we provide fast delivery but in rare cases some deliveries may take 1–2 working days.
+    
+  </span>
+  <br />
+  If you CANNOT receive your order within 1–2 working days, DO NOT place an order.
+    We will contact you immediately and start processing your order.
+</p>
 
-          <p className="text-lg mb-8">
-            Note that we provide fast delivery but in rare cases some deliveries may take 1-2 working days.
-          </p>
+          
         </div>
       </section>
 
@@ -722,6 +732,7 @@ export default function WartRemoverLandingPage() {
                 </div>
 
 
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -807,33 +818,13 @@ export default function WartRemoverLandingPage() {
 
       {/* Floating Elements */}
       <>
-        {/* COMMENTED OUT - Floating notification */}
-        {/* <div className="fixed bottom-32 md:bottom-4 right-4 bg-white shadow-lg rounded-lg p-4 border border-gray-200 max-w-sm z-40">
-          <div className="flex items-center">
-            <img
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%233b82f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='16' fill='white' font-family='Arial, sans-serif'%3EA%3C/text%3E%3C/svg%3E"
-              alt="Customer avatar"
-              className="w-10 h-10 rounded-full mr-3 object-cover"
-            />
-            <div className="flex-1">
-              <p className="text-sm text-gray-900">
-                <strong>Adanna from Rivers</strong> has just purchased Wart Remover Cream
-              </p>
-              <p className="text-xs text-gray-500">5 sec ago</p>
-            </div>
-            <CheckCircle className="w-5 h-5 text-green-600" />
-          </div>
-        </div> */}
-
+        
         {/* Fixed WhatsApp Widget - Better mobile positioning */}
                 <div className="fixed right-4 bottom-20 md:bottom-24 z-50">
           <div className="relative group">
             {/* WhatsApp tooltip */}
             <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none">
-              {/* <div className="bg-gray-900 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap">
-                Chat with us on WhatsApp
-                <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-              </div> */}
+              
             </div>
             
             <a

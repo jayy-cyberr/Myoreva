@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
@@ -17,7 +17,6 @@ import WartRemoverLandingPage from "./pages/WartRemoverLandingPage";
 import ThankYouPage from "./pages/ThankYouPage";
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import CampGasPage from './pages/CampGasLandingPage';
 import CampGasLandingPage from './pages/CampGasLandingPage';
 
 function App() {
