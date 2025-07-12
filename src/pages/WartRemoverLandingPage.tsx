@@ -794,8 +794,8 @@ export default function WartRemoverLandingPage() {
           
           <p className="text-center text-sm text-gray-600 mt-4 flex justify-center items-center gap-1">
   <Home className="w-4 h-4 text-white" />
-  <a href="/" className="underline text-white hover:text-blue-600 ml-1">
-    Back to Main Homepage
+  <a href="/products" className="underline text-white hover:text-blue-600 ml-1">
+    Back to Our Products Page
   </a>
 </p>
 

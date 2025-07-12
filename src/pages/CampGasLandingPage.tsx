@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
+import camp from '../assets/products/campgas2.jpg';
+import camp1 from '../assets/products/campgas.jpg';
+import campground from '../assets/products/campppl.jpg';
+// import kett from '../assets/products/kettle.jpg';
+// import fry from '../assets/products/campfrying.jpg';
+import video1 from '../assets/products/vid1.mp4';
+import video2 from '../assets/products/vid2.mp4';
+
 
 import {
   Star,
@@ -22,7 +30,8 @@ import {
   Timer,
   ShoppingCart,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Bold
 } from "lucide-react";
 
 export default function CampGasLandpingPage() {
@@ -95,14 +104,14 @@ export default function CampGasLandpingPage() {
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop&crop=face"
     },
     {
-      name: "Grace Adebayo",
+      name: "Anonymous",
       location: "Abuja",
       rating: 5,
       text: "Abeg, this camp gas dey work like magic! I used it for my outdoor cooking and it was like a breeze! No more stress, no more hassle. The flame is steady, the heat is strong, and its so easy to use.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?w=64&h=64&fit=crop&crop=face"
+      image: ""
     },
     {
-      name: "Mr Larance",
+      name: "Mr Lawrence",
       location: "Port Harcourt",
       rating: 5,
       text: "This camp gas cylinder na God sent o! I use am for my BBQ gatherings and its a game changer. The gas lasts long, the burner is strong, and its so portable.",
@@ -144,15 +153,24 @@ export default function CampGasLandpingPage() {
   ];
 
   const productImages = [
-    "https://ext.same-assets.com/766014306/3315234400.jpeg",
-    "https://ext.same-assets.com/766014306/3744395389.jpeg",
-    "https://ext.same-assets.com/766014306/2224721905.jpeg",
-    "https://ext.same-assets.com/766014306/3829765178.jpeg"
+    // "https://ext.same-assets.com/766014306/3315234400.jpeg",
+    // "https://ext.same-assets.com/766014306/3744395389.jpeg",
+    // "https://ext.same-assets.com/766014306/2224721905.jpeg",
+    camp,
+    camp1,
+    "https://ext.same-assets.com/766014306/3829765178.jpeg",
+    campground,
+    // kett,
+    // fry,
+
+
   ];
 
   const productVideos = [
-    "https://ext.same-assets.com/766014306/2132041780.mp4",
-    "https://ext.same-assets.com/766014306/2049059161.mp4"
+    // "https://ext.same-assets.com/766014306/2132041780.mp4",
+    // "https://ext.same-assets.com/766014306/2049059161.mp4",
+    video1,
+    video2
   ];
 
   // Animation variants
@@ -333,8 +351,10 @@ export default function CampGasLandpingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
               >
-                Experience the ultimate outdoor cooking with our premium portable gas stove.
-                Perfect for camping, hiking, BBQ gatherings and all outdoor adventures.
+                Are you tired of running out of gas in the middle of cooking or working?
+
+                Our Portable Camping Gas Stove is here to save the day! .
+                {/* Perfect for camping, hiking, BBQ gatherings and all outdoor adventures. */}
               </motion.p>
 
               {/* Pricing */}
@@ -574,7 +594,7 @@ export default function CampGasLandpingPage() {
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              See why thousands of outdoor enthusiasts choose our professional camp gas stove for their adventures
+              See why thousands of outdoor enthusiasts choose our portable camp gas stove for their adventures
             </motion.p>
           </motion.div>
 
@@ -605,7 +625,7 @@ export default function CampGasLandpingPage() {
                     transition={{ duration: 2, repeat: Infinity }}
                   >
                     <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                      LIVE DEMO
+                      LIVE VIDEO
                     </div>
                   </motion.div>
                 </div>
@@ -746,9 +766,8 @@ export default function CampGasLandpingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              Our gas cylinders are designed to provide consistent flow of gas, ensuring you have enough power for all your needs.
-              Made with high-quality materials and undergo rigorous testing to ensure your safety.
+            >With our reliable and efficient gas cylinders, you'll never have to worry about running out of power again.
+Our Camp Gas is here to save the day!
             </motion.p>
           </motion.div>
 
@@ -1066,7 +1085,7 @@ export default function CampGasLandpingPage() {
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              All packages include free delivery nationwide and easy return policy
+              All packages include free delivery nationwide
             </motion.p>
           </motion.div>
 
@@ -1179,7 +1198,7 @@ export default function CampGasLandpingPage() {
                       transition={{ duration: 0.6 }}
                     />
                     <span className="relative z-10 flex items-center justify-center">
-                      Choose This Package
+                      I  Want  This  Package
                       <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                     </span>
                   </motion.button>
@@ -1211,12 +1230,14 @@ export default function CampGasLandpingPage() {
                   <Clock className="h-4 w-4 mr-2 text-red-600" />
                 </motion.div>
                 <span className="text-red-800 font-medium text-sm sm:text-base">
-                  <strong>ATTENTION:</strong>
+                  <strong>ATTENTION PLEASE:</strong>
                 </span>
               </div>
               <p className="text-red-800 text-sm sm:text-base">
-                If you CANNOT receive your order within 1-3 working days, please DO NOT place an order.
-                We will contact you immediately and start processing your order.
+                We are charged for every order that you place. <br />
+                If you CANNOT receive your order within 1-3 working days, please DO NOT place an order. <br />
+                If you will be TRAVELING and will not be available DO NOT place an order. <br />
+                NOTE: <br />We will contact you immediately and start processing your order. <br />Thanks for  your understanding!
               </p>
             </motion.div>
           </motion.div>
@@ -1632,8 +1653,8 @@ export default function CampGasLandpingPage() {
           
           <p className="text-center text-sm text-gray-600 mt-4 flex justify-center items-center gap-1">
   <Home className="w-4 h-4 text-white" />
-  <a href="/" className="underline text-white hover:text-blue-600 ml-1">
-    Back to Main Homepage
+  <a href="/products" className="underline text-white hover:text-blue-600 ml-1">
+    Back to Our Products Page
   </a>
 </p>
 
