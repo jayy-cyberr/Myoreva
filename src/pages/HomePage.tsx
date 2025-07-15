@@ -189,8 +189,6 @@ const HomePage: React.FC = () => {
     <div className="bg-gray-50">
       {/* Hero Section - Enhanced */}
       <section className="relative h-screen overflow-hidden">
-        {/* <AnimatePresence mode="wait"> */}
-{/* This prevents re-renders, avoids white flashes, and smoothly fades between backgrounds without blinking. */}
 
           <div className="absolute inset-0">
   {carouselSlides.map((slide, index) => (
@@ -218,69 +216,72 @@ const HomePage: React.FC = () => {
                   key={`content-${currentSlide}`}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
                   className="text-white space-y-6"
                 >
-                  <div className="space-y-2">
-                    <motion.h3
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                      className="text-2xl md:text-3xl font-light text-green-200"
-                    >
-                      {carouselSlides[currentSlide].title}
-                    </motion.h3>
+                 <div className="space-y-2">
+  {/* h3 slides from left */}
+  <motion.h3
+    initial={{ opacity: 0, x: -60 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6, delay: 0.4 }}
+    className="text-2xl md:text-3xl font-light text-green-200"
+  >
+    {carouselSlides[currentSlide].title}
+  </motion.h3>
 
-                    <motion.h1
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.4 }}
-                      className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
-                    >
-                      {carouselSlides[currentSlide].subtitle}
-                    </motion.h1>
-                  </div>
+  {/* h1 slides from left */}
+  <motion.h1
+    initial={{ opacity: 0, x: -60 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.8, delay: 0.4 }}
+    className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
+  >
+    {carouselSlides[currentSlide].subtitle}
+  </motion.h1>
+</div>
 
-                  <motion.p
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.6 }}
-                    className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl"
-                  >
-                    {carouselSlides[currentSlide].description}
-                  </motion.p>
-                  
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                    className="pt-6"
-                  >
-                    <Link
-                      to={carouselSlides[currentSlide].buttonLink}
-                      className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition"
-                    >
-                      <motion.span
-                        key={`bounce-${currentSlide}`}
-                        initial={{ scale: 1, y: 0 }}
-                        animate={{
-                          scale: [1, 1.05, 1],
-                          y: [0, -4, 0]
-                        }}
-                        transition={{
-                          duration: 2.1,
-                          repeat: Infinity,
-                          repeatType: 'loop',
-                          ease: 'easeInOut'
-                        }}
-                        className="inline-block"
-                      >
-                        {carouselSlides[currentSlide].buttonText}
-                      </motion.span>
-                      <ArrowRight className="ml-2" size={18} />
-                    </Link>
-                  </motion.div>
+{/* p tag comes in from bottom AFTER all the above */}
+<motion.p
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.9 }}
+  className="text-base md:text-xl font-light text-gray-200 max-w-2xl mt-4"
+>
+  {carouselSlides[currentSlide].description}
+</motion.p>
+
+
+{/* button also slides in from left */}
+<motion.div
+  initial={{ opacity: 0, x: -60 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+  className="pt-6"
+>
+  <Link
+    to={carouselSlides[currentSlide].buttonLink}
+    className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition"
+  >
+    <motion.span
+      key={`bounce-${currentSlide}`}
+      initial={{ scale: 1, y: 0 }}
+      animate={{ scale: [1, 1.05, 1], y: [0, -4, 0] }}
+      transition={{
+        duration: 2.1,
+        repeat: Infinity,
+        repeatType: 'loop',
+        ease: 'easeInOut'
+      }}
+      className="inline-block"
+    >
+      {carouselSlides[currentSlide].buttonText}
+    </motion.span>
+    <ArrowRight className="ml-2" size={12} />
+  </Link>
+</motion.div>
+
                 </motion.div>
               </div>
 
