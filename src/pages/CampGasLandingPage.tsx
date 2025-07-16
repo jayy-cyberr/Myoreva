@@ -108,7 +108,7 @@ export default function CampGasLandpingPage() {
       location: "Abuja",
       rating: 5,
       text: "Abeg, this camp gas dey work like magic! I used it for my outdoor cooking and it was like a breeze! No more stress, no more hassle. The flame is steady, the heat is strong, and its so easy to use.",
-      image: ""
+      image: "https://ui-avatars.com/api/?name=Anonymous&background=000000&color=ffffff"
     },
     {
       name: "Mr Lawrence",

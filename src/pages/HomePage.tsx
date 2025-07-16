@@ -416,15 +416,29 @@ const HomePage: React.FC = () => {
             </motion.p>
           </div>
 
-          {/* Products Grid - 2 columns on mobile */}
-<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-  {featuredProducts.map((product, index) => (
+           {/* Products Grid - Optimized with staggered animation */}
+<motion.div
+  initial="hidden"
+  whileInView="visible"
+  variants={{
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }}
+  viewport={{ once: true, amount: 0.1 }}
+  className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+>
+  {featuredProducts.map((product) => (
     <motion.div
       key={product.id}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+      variants={{
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 }
+      }}
+      transition={{ duration: 0.5 }}
       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
     >
       <div className="relative group">
@@ -446,11 +460,9 @@ const HomePage: React.FC = () => {
         </h3>
 
         {/* Description */}
-  <p className="text-gray-600 text-sm mb-2 line-clamp-2">
-    {product.description}
-  </p>
-
-        {/* Removed star ratings and reviews count */}
+        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+          {product.description}
+        </p>
 
         <div className="flex items-center justify-between mb-3">
           <span className="font-bold text-lg text-gray-900">
@@ -468,7 +480,8 @@ const HomePage: React.FC = () => {
       </div>
     </motion.div>
   ))}
-</div>
+</motion.div>
+
 
 
 {/* View All Products Button */}
