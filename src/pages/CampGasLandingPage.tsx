@@ -1311,7 +1311,7 @@ Our Camp Gas is here to save the day!
                         value={orderForm.fullName}
                         onChange={(e) => setOrderForm({...orderForm, fullName: e.target.value})}
                         className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none transition-all duration-300 hover:border-gray-400"
-                        placeholder="Enter your full name"
+                        placeholder=""
                         whileFocus={{ scale: 1.02 }}
                       />
                     </motion.div>
@@ -1375,6 +1375,9 @@ Our Camp Gas is here to save the day!
                       placeholder=""
                       whileFocus={{ scale: 1.02 }}
                     />
+                    <p className="text-xs text-gray-500 mt-1">
+                        PLEASE INDICATE ANY POPULAR LANDMARK.
+                      </p>
                   </motion.div>
 
                   <motion.div 

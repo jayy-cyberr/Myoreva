@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { CheckCircle, Star, Clock, Shield, Award, Truck, Lock, Zap, Home, ChevronLeft, ChevronRight, Phone, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
+import { motion } from "framer-motion";
+
 
 import wartRemoverImg1 from '../assets/products/wat ad img/WART REMOVER FLYER 3.jpg'
 import mygif from '../assets/products/wat ad img/My-gif-skin2.gif'
@@ -34,6 +36,7 @@ export default function WartRemoverLandingPage() {
     state: "",
     package: "",
     comment: "",
+    availability: "",
   });
 
   const [showStickyButton, setShowStickyButton] = useState(false);
@@ -627,124 +630,157 @@ export default function WartRemoverLandingPage() {
         </div>
       </section>
 
-      {/* Order Form Section with enhanced styling */}
-      <section 
-        id="order-section" 
-        data-animate
-        className={`bg-white py-16 px-4 ${getAnimationClass('order-section')}`}
+      {/* Wart Remover Order Form (radio-style package selection) */}
+<section id="order-form" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-100 via-slate-100 to-stone-200 relative">
+  <motion.div 
+    className="absolute inset-0 opacity-20"
+    animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+    style={{
+      backgroundImage: `conic-gradient(from 0deg at 30% 70%, rgba(234,88,12,0.1) 0deg, transparent 120deg, rgba(16,185,129,0.1) 240deg, transparent 360deg)`
+    }}
+  />
+
+  <div className="container mx-auto px-4 relative z-10">
+    <div className="max-w-4xl mx-auto">
+      <motion.div 
+        className="bg-white rounded-2xl shadow-2xl overflow-hidden"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.8 }}
       >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-orange-600 mb-8">
-            KINDLY FILL THE FORM BELOW TO PLACE YOUR ORDER NOW!!!
-          </h2>
+        <motion.div 
+          className="bg-gradient-to-r from-orange-600 via-orange-700 to-amber-800 text-white p-6 sm:p-8 text-center relative overflow-hidden"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          />
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 relative z-10">PLACE YOUR WART REMOVER ORDER BELOW...</h2>
+          <p className="text-base sm:text-lg opacity-90 relative z-10">Fill the form below to complete your order</p>
+        </motion.div>
 
-          <div className="shadow-2xl rounded-lg bg-white">
-            <div className="p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="fullName" className="block text-lg font-semibold text-gray-700 mb-2">YOUR FULL NAME *</label>
-                  <input
-                    id="fullName"
-                    type="text"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                    className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phoneNumber" className="block text-lg font-semibold text-gray-700 mb-2">YOUR PHONE NUMBER(S) *</label>
-                  <input
-                    id="phoneNumber"
-                    type="tel"
-                    value={formData.phoneNumber}
-                    onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
-                    className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="If you have more than 1 number then separate with comma(,)"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="alternativePhone" className="block text-lg font-semibold text-gray-700 mb-2">ALTERNATIVE/WHATSAPP PHONE NUMBER</label>
-                  <input
-                    id="alternativePhone"
-                    type="tel"
-                    value={formData.alternativePhone}
-                    onChange={(e) => setFormData({...formData, alternativePhone: e.target.value})}
-                    className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Number we can reach on WhatsApp. This can be your wife's, husband or anybody close to you."
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="address" className="block text-lg font-semibold text-gray-700 mb-2">FULL DELIVERY ADDRESS *</label>
-                  <textarea
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => setFormData({...formData, address: e.target.value})}
-                    className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[100px] resize-vertical"
-                    placeholder="Please indicate any popular landmark"
-                    required
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="city" className="block text-lg font-semibold text-gray-700 mb-2">CITY *</label>
-                    <input
-                      id="city"
-                      type="text"
-                      value={formData.city}
-                      onChange={(e) => setFormData({...formData, city: e.target.value})}
-                      className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="state" className="block text-lg font-semibold text-gray-700 mb-2">STATE *</label>
-                    <input
-                      id="state"
-                      type="text"
-                      value={formData.state}
-                      onChange={(e) => setFormData({...formData, state: e.target.value})}
-                      className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="package" className="block text-lg font-semibold text-gray-700 mb-2">KINDLY SELECT YOUR DESIRED PACKAGE *</label>
-                  <select
-                    id="package"
-                    value={formData.package}
-                    onChange={(e) => setFormData({...formData, package: e.target.value})}
-                    className="w-full text-lg p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-                    required
-                  >
-                    <option value="">Select a package</option>
-                    <option value="1-basic">1 Wart Remover = ₦13,500 (Basic) Regular</option>
-                    <option value="2-popular">2 Wart Remover = ₦20,500 (Popular Choice)</option>
-                    <option value="3-recommended">3 Wart Remover = ₦29,500 (Highly Recommended) Perfect!</option>
-                  </select>
-                </div>
-
-
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 text-xl font-bold rounded-lg transform hover:scale-105 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? '🔄 PROCESSING...' : '🛒 PLACE YOUR ORDER NOW'}
-                </button>
-              </form>
+        <motion.div 
+          className="p-6 sm:p-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">YOUR FULL NAME *</label>
+                <input type="text" required value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">YOUR PHONE NUMBER(S) *</label>
+                <input type="tel" required value={formData.phoneNumber} onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400" placeholder="" />
+                <p className="text-xs text-gray-500 mt-1">
+                        IF YOU HAVE MORE THAN 1 NUMBER THEN SEPERATE WITH COMMA(,).
+                      </p>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">ALTERNATIVE/WHATSAPP PHONE NUMBER</label>
+              <input type="tel" value={formData.alternativePhone} onChange={(e) => setFormData({ ...formData, alternativePhone: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400" placeholder="" />
+              <p className="text-xs text-gray-500 mt-1">
+                      NUMBER WE CAN REACH ON WHATSAPP. THIS CAN BE YOUR WIFE'S, HUSBAND OR ANYBODY CLOSE TO YOU.
+                    </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">FULL DELIVERY ADDRESS *</label>
+              <textarea required value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400 min-h-[100px] resize-vertical" placeholder="" />
+                <p className="text-xs text-gray-500 mt-1">
+                        PLEASE INDICATE ANY POPULAR LANDMARK.
+                      </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">CITY *</label>
+                <input type="text" required value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">STATE *</label>
+                <input type="text" required value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all duration-300 hover:border-gray-400" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">KINDLY SELECT YOUR DESIRED PACKAGE *</label>
+              <div className="space-y-3">
+                {[
+                  {
+                    id: "1-basic",
+                    label: "1 Wart Remover = ₦13,500",
+                    note: "",
+                  },
+                  {
+                    id: "2-popular",
+                    label: "2 Wart Remover = ₦20,500",
+                    note: " (Popular Choice)",
+                  },
+                  {
+                    id: "3-recommended",
+                    label: "3 Wart Remover = ₦29,500",
+                    note: " (Highly Recommended)",
+                  },
+                ].map((pkg) => (
+                  <label
+                    key={pkg.id}
+                    className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-orange-200 hover:bg-orange-50 transition-all duration-300"
+                  >
+                    <input
+                      type="radio"
+                      name="package"
+                      value={pkg.id}
+                      checked={formData.package === pkg.id}
+                      onChange={(e) => setFormData({ ...formData, package: e.target.value })}
+                      className="mr-3 text-orange-500 focus:ring-orange-500 w-4 h-4"
+                      required
+                    />
+                    <span className="text-gray-700 font-medium">
+                      {pkg.label}
+                      <span className="font-semibold text-orange-600">{pkg.note}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2 uppercase">ARE YOU AVAILABLE TO RECEIVE YOUR ORDER WITHIN 24-48HRS? *</label>
+              <div className="space-y-2">
+                <label className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-green-200 hover:bg-green-50 transition-all duration-300">
+                  <input type="radio" name="availability" value="yes" onChange={() => setFormData({ ...formData, availability: "yes" })} className="mr-3 text-orange-500 focus:ring-orange-500 w-4 h-4" required />
+                  <span className="text-gray-700 font-medium">YES</span>
+                </label>
+                <label className="flex items-center cursor-pointer p-3 rounded-lg border-2 border-transparent hover:border-red-200 hover:bg-red-50 transition-all duration-300">
+                  <input type="radio" name="availability" value="no" onChange={() => setFormData({ ...formData, availability: "no" })} className="mr-3 text-orange-500 focus:ring-orange-500 w-4 h-4" required />
+                  <span className="text-gray-700 font-medium">NO</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" disabled={isSubmitting} className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 text-xl font-bold rounded-lg transform hover:scale-105 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+              {isSubmitting ? '🔄 PROCESSING...' : '🛒 PLACE YOUR ORDER NOW'}
+            </button>
+          </form>
+        </motion.div>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
 
       {/* Contact Section */}
       <section className="bg-gray-900 text-white py-16 px-4">
