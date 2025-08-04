@@ -19,6 +19,14 @@ interface CarouselSlide {
   buttonLink: string;
 }
 
+interface SubscriptionState {
+  email: string;
+  isLoading: boolean;
+  message: string;
+  isSuccess: boolean;
+  isError: boolean;
+}
+
 const carouselSlides: CarouselSlide[] = [
   {
     id: 1,
@@ -146,6 +154,15 @@ const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  
+  // Newsletter subscription state
+  const [subscription, setSubscription] = useState<SubscriptionState>({
+    email: '',
+    isLoading: false,
+    message: '',
+    isSuccess: false,
+    isError: false
+  });
 
   // Auto-play functionality
   useEffect(() => {
@@ -183,6 +200,58 @@ const HomePage: React.FC = () => {
     setCurrentSlide((prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length);
     setIsAutoPlay(false);
     setTimeout(() => setIsAutoPlay(true), 10000);
+  };
+
+  // Newsletter subscription function
+  const handleSubscription = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (!subscription.email.trim()) {
+      setSubscription(prev => ({
+        ...prev,
+        message: 'Please enter a valid email address',
+        isError: true
+      }));
+      return;
+    }
+
+    setSubscription(prev => ({ ...prev, isLoading: true, message: '', isError: false }));
+
+    try {
+      const response = await fetch('http://localhost:6500/mail/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: subscription.email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubscription(prev => ({
+          ...prev,
+          isLoading: false,
+          message: 'Successfully subscribed to our newsletter!',
+          isSuccess: true,
+          email: ''
+        }));
+      } else {
+        setSubscription(prev => ({
+          ...prev,
+          isLoading: false,
+          message: data.message || 'Subscription failed. Please try again.',
+          isError: true
+        }));
+      }
+    } catch (error) {
+      setSubscription(prev => ({
+        ...prev,
+        isLoading: false,
+        message: 'Network error. Please check your connection and try again.',
+        isError: true
+      }));
+    }
   };
 
   return (
@@ -607,53 +676,76 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-3xl font-bold mb-4 text-white">Join Our Wellness Community</h2>
-                <p className="text-green-100 mb-6">
-                  Subscribe to receive updates on new products, special offers, and wellness tips.
-                </p>
-                <form className="flex flex-col sm:flex-row gap-3">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="flex-grow px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-300 focus:outline-none"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300"
-                  >
-                    Subscribe Now
-                  </button>
-                </form>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="hidden md:block"
-              >
-                <img
-                  src="https://images.pexels.com/photos/6621310/pexels-photo-6621310.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Natural wellness products"
-                  className="rounded-lg w-full h-64 object-cover shadow-lg"
-                />
-              </motion.div>
+      
+     {/* Newsletter */}
+<section className="py-16 bg-white">
+  <div className="container mx-auto px-4 lg:px-8">
+    <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-xl p-8 md:p-12">
+      <div className="grid md:grid-cols-2 gap-8 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl font-bold mb-4 text-white">Join Our Wellness Community</h2>
+          <p className="text-green-100 mb-6">
+            Subscribe to receive updates on new products, special offers, and wellness tips.
+          </p>
+          
+          {/* Status Messages */}
+          {subscription.message && (
+            <div className={`mb-4 p-3 rounded-lg ${
+              subscription.isSuccess 
+                ? 'bg-green-100 text-green-800 border border-green-200' 
+                : 'bg-red-100 text-red-800 border border-red-200'
+            }`}>
+              {subscription.message}
             </div>
-          </div>
-        </div>
-      </section>
+          )}
+
+          <form onSubmit={handleSubscription} className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={subscription.email}
+              onChange={(e) => setSubscription(prev => ({ 
+                ...prev, 
+                email: e.target.value,
+                message: '',
+                isError: false,
+                isSuccess: false
+              }))}
+              className="flex-grow px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-300 focus:outline-none"
+              required
+              disabled={subscription.isLoading}
+            />
+            <button
+              type="submit"
+              disabled={subscription.isLoading}
+              className="px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {subscription.isLoading ? 'Subscribing...' : 'Subscribe Now'}
+            </button>
+          </form>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="hidden md:block"
+        >
+          <img
+            src="https://images.pexels.com/photos/6621310/pexels-photo-6621310.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt="Natural wellness products"
+            className="rounded-lg w-full h-64 object-cover shadow-lg"
+          />
+        </motion.div>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 };
