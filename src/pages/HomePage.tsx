@@ -20,12 +20,14 @@ interface CarouselSlide {
 }
 
 interface SubscriptionState {
+  name: string;
   email: string;
   isLoading: boolean;
   message: string;
   isSuccess: boolean;
   isError: boolean;
 }
+
 
 const carouselSlides: CarouselSlide[] = [
   {
@@ -157,12 +159,14 @@ const HomePage: React.FC = () => {
   
   // Newsletter subscription state
   const [subscription, setSubscription] = useState<SubscriptionState>({
-    email: '',
-    isLoading: false,
-    message: '',
-    isSuccess: false,
-    isError: false
-  });
+  name: '', // <-- add this line
+  email: '',
+  isLoading: false,
+  message: '',
+  isSuccess: false,
+  isError: false
+});
+
 
   // Auto-play functionality
   useEffect(() => {
@@ -218,12 +222,12 @@ const HomePage: React.FC = () => {
     setSubscription(prev => ({ ...prev, isLoading: true, message: '', isError: false }));
 
     try {
-      const response = await fetch('http://localhost:6500/mail/subscribe', {
+      const response = await fetch('https://myoreva-backend-1.onrender.com/api/mail/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: subscription.email }),
+        body: JSON.stringify({ email: subscription.email, name: subscription.name }),
       });
 
       const data = await response.json();
@@ -234,7 +238,8 @@ const HomePage: React.FC = () => {
           isLoading: false,
           message: 'Successfully subscribed to our newsletter!',
           isSuccess: true,
-          email: ''
+          email: '',
+          name: ''
         }));
       } else {
         setSubscription(prev => ({
@@ -316,7 +321,7 @@ const HomePage: React.FC = () => {
   initial={{ opacity: 0, y: 50 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, delay: 0.9 }}
-  className="text-base md:text-xl font-light text-gray-200 max-w-2xl mt-4"
+  className="text-base md:text-xl font-light text-white max-w-2xl mt-4"
 >
   {carouselSlides[currentSlide].description}
 </motion.p>
@@ -485,7 +490,7 @@ const HomePage: React.FC = () => {
             </motion.p>
           </div>
 
-           {/* Products Grid - Optimized with staggered animation */}
+{/* Products Grid - Smooth Staggered Animation */}
 <motion.div
   initial="hidden"
   whileInView="visible"
@@ -493,28 +498,38 @@ const HomePage: React.FC = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.15, // Slight delay between items
+      },
+    },
   }}
-  viewport={{ once: true, amount: 0.1 }}
+  viewport={{ once: true, amount: 0.15 }} // Trigger only once, slightly later
   className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
 >
   {featuredProducts.map((product) => (
     <motion.div
       key={product.id}
       variants={{
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0 }
+        hidden: { opacity: 0, y: 40, scale: 0.95 },
+        visible: { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          transition: {
+            duration: 0.6,
+            ease: [0.25, 0.1, 0.25, 1], // Smooth ease
+          },
+        },
       }}
-      transition={{ duration: 0.5 }}
-      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
     >
       <div className="relative group">
-        <img
+        <motion.img
           src={product.image}
           alt={product.name}
-          className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-700"
+          initial={{ scale: 1.05 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-48 md:h-56 object-cover"
         />
         <div className="absolute top-3 left-3">
           <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
@@ -541,6 +556,7 @@ const HomePage: React.FC = () => {
 
         <a
           href={product.redirectUrl}
+          target="_blank"
           rel="noopener noreferrer"
           className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm"
         >
@@ -550,6 +566,9 @@ const HomePage: React.FC = () => {
     </motion.div>
   ))}
 </motion.div>
+
+
+
 
 
 
@@ -578,7 +597,6 @@ const HomePage: React.FC = () => {
       {/* Testimonials - */}
       <section className="py-20 bg-gradient-to-br from-gray-100 via-white to-gray-100 relative overflow-hidden">
 
-        
         <div className="container mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
             <motion.p
@@ -682,6 +700,7 @@ const HomePage: React.FC = () => {
   <div className="container mx-auto px-4 lg:px-8">
     <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-xl p-8 md:p-12">
       <div className="grid md:grid-cols-2 gap-8 items-center">
+        {/* Text + Form Section */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -692,7 +711,7 @@ const HomePage: React.FC = () => {
           <p className="text-green-100 mb-6">
             Subscribe to receive updates on new products, special offers, and wellness tips.
           </p>
-          
+
           {/* Status Messages */}
           {subscription.message && (
             <div className={`mb-4 p-3 rounded-lg ${
@@ -704,31 +723,54 @@ const HomePage: React.FC = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubscription} className="flex flex-col sm:flex-row gap-3">
+          {/* Subscription Form */}
+          <form onSubmit={handleSubscription} className="flex flex-col gap-4">
+            {/* Name Input */}
+            <input
+              type="text"
+              placeholder="Your full name"
+              value={subscription.name || ""}
+              onChange={(e) => setSubscription(prev => ({
+                ...prev,
+                name: e.target.value,
+                message: '',
+                isError: false,
+                isSuccess: false
+              }))}
+              className="w-full px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-300 focus:outline-none text-sm"
+              required
+              disabled={subscription.isLoading}
+            />
+
+            {/* Email Input */}
             <input
               type="email"
               placeholder="Your email address"
               value={subscription.email}
-              onChange={(e) => setSubscription(prev => ({ 
-                ...prev, 
+              onChange={(e) => setSubscription(prev => ({
+                ...prev,
                 email: e.target.value,
                 message: '',
                 isError: false,
                 isSuccess: false
               }))}
-              className="flex-grow px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-300 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-300 focus:outline-none text-sm"
               required
               disabled={subscription.isLoading}
             />
+
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={subscription.isLoading}
-              className="px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-8 py-3 bg-white text-green-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
               {subscription.isLoading ? 'Subscribing...' : 'Subscribe Now'}
             </button>
           </form>
         </motion.div>
+
+        {/* Image Side */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}

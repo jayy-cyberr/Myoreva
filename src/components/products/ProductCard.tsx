@@ -42,16 +42,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         )}
         
-
-
-
-        {/* <button
-          onClick={handleAddToCart}
-          className="absolute bottom-4 right-4 bg-white text-primary p-3 rounded-full shadow-md opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-secondary hover:text-white"
-          aria-label="Add to cart"
-        >
-          <ShoppingCart size={18} />
-        </button> */}
       </div>
 
       <div className="p-4">

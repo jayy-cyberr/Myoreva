@@ -15,6 +15,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ScrollToTop from './components/ui/ScrollToTop';
 import WartRemoverLandingPage from "./pages/WartRemoverLandingPage";
 import ThankYouPage from "./pages/ThankYouPage";
+import ThankYouRemover from "./pages/ThankYouRemover";
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import CampGasLandingPage from './pages/CampGasLandingPage';
@@ -38,6 +39,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/wart-remover" element={<WartRemoverLandingPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/thank-you2" element={<ThankYouRemover />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/camp-gas" element={<CampGasLandingPage />} />

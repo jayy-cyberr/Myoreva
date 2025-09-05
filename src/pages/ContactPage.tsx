@@ -65,6 +65,7 @@ const ContactPage: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
+          
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -104,23 +105,12 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
 
-            {/* GOOGLE MAP */}
-
-            {/* <div className="bg-white rounded-xl shadow-sm p-8">
-              <h3 className="text-xl font-bold mb-4">Find Us</h3>
-              <div className="rounded-lg overflow-hidden h-80 bg-gray-200 flex items-center justify-center">
-                <div className="text-center p-4">
-                  <MapPin className="text-primary mx-auto mb-2" size={32} />
-                  <p className="text-gray-600">Google Maps Embed Coming Soon<br />Ibadan, Oyo State</p>
-                </div>
-              </div>
-            </div> */}
-
           </motion.div>
         </div>
 
+
         {/* Newsletter */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -144,7 +134,10 @@ const ContactPage: React.FC = () => {
               </button>
             </form>
           </div>
-        </motion.div>
+        </motion.div> */}
+
+
+
       </div>
     </div>
   );

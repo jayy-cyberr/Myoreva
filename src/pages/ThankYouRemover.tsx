@@ -1,4 +1,4 @@
-import camp1 from "../assets/products/campgas.jpg";
+import hbestyy from "../assets/products/Hbestyy.jpg";
 
 export default function ThankYouPage() {
   
@@ -11,7 +11,7 @@ export default function ThankYouPage() {
         {/* Product Image */}
         <div className="mb-6">
           <img
-            src={camp1}
+            src={hbestyy}
             alt="Camping Gas Stove"
             className="w-48 h-48 object-contain mx-auto rounded-lg shadow-lg border border-gray-200"
           />

@@ -10,7 +10,10 @@ const Layout: React.FC = () => {
   // Paths where Footer, Header, and WhatsAppWidget should be hidden
   const hideLayoutPaths = ['/wart-remover', '/camp-gas'];
 
-  const shouldHideLayout = hideLayoutPaths.includes(location.pathname);
+  // Match base paths even if there are subpaths or query params
+  const shouldHideLayout = hideLayoutPaths.some(path =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <div className="flex flex-col min-h-screen">

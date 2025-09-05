@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useAnimation } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 import camp from '../assets/products/campgas2.jpg';
 import camp1 from '../assets/products/campgas.jpg';
 import campground from '../assets/products/campppl.jpg';
+import campfry from '../assets/products/campfrying.jpg';
+import easy from '../assets/products/easyto.webp';
 // import kett from '../assets/products/kettle.jpg';
-// import fry from '../assets/products/campfrying.jpg';
 import video1 from '../assets/products/vid1.mp4';
 import video2 from '../assets/products/vid2.mp4';
+import packageImg1 from "../assets/products/1.jpg";
+import packageImg2 from "../assets/products/2.jpg";
+import packageImg3 from "../assets/products/3.jpg";
 
 
 import {
@@ -58,42 +62,45 @@ export default function CampGasLandpingPage() {
     address: "",
     city: "",
     state: "",
-    package: "regular"
+    package: ""
   });
 
-  // Product data
-  const packages = [
-    {
-      id: "regular",
-      name: "REGULAR",
-      subtitle: "1 Camping Gas + 1 Cylinder",
-      price: "38,500",
-      originalPrice: "46,500",
-      savings: "8,000",
-      popular: false,
-      features: ["1 Portable Camp Gas Stove", "1 Gas Cylinder", "Free Delivery", "Easy Return Policy", "1 Year Warranty"]
-    },
-    {
-      id: "silver",
-      name: "SILVER",
-      subtitle: "1 Camping Gas + 2 Cylinders",
-      price: "45,000",
-      originalPrice: "58,500",
-      savings: "13,500",
-      popular: true,
-      features: ["1 Professional Camp Gas Stove", "2 Gas Cylinders", "Free Delivery", "Easy Return Policy", "1 Year Warranty",]
-    },
-    {
-      id: "family",
-      name: "FAMILY CAMPING",
-      subtitle: "1 Camping Gas + 3 Cylinders",
-      price: "53,500",
-      originalPrice: "76,500",
-      savings: "23,000",
-      popular: false,
-      features: ["1 Professional Camp Gas Stove", "3 Gas Cylinders", "Free Delivery", "Easy Return Policy", "1 Year Warranty", "Storage Bag Included", "Best Value for Families"]
-    }
-  ];
+  // Your actual packages array structure
+const packages = [
+  {
+    id: "1 Camping Gas + 1 Cylinder",
+    name: "REGULAR",
+    subtitle: "1 Camping Gas + 1 Cylinder",
+    image: packageImg1,
+    price: "38,500",
+    originalPrice: "46,500",
+    savings: "8,000",
+    popular: false,
+    features: ["Free Delivery", "Easy Return Policy", "1 Year Warranty"]
+  },
+  {
+    id: "1 Camping Gas + 2 Cylinders",
+    name: "SILVER",
+    subtitle: "1 Camping Gas + 2 Cylinders",
+    image: packageImg2,
+    price: "45,000",
+    originalPrice: "58,500",
+    savings: "13,500",
+    popular: true,
+    features: ["Free Delivery", "Easy Return Policy", "1 Year Warranty"]
+  },
+  {
+    id: "1 Camping Gas + 3 Cylinders",
+    name: "FAMILY CAMPING",
+    subtitle: "1 Camping Gas + 3 Cylinders",
+    image: packageImg3,
+    price: "53,500",
+    originalPrice: "76,500",
+    savings: "23,000",
+    popular: false,
+    features: ["Free Delivery", "Easy Return Policy", "1 Year Warranty", "Best Value for Families"]
+  }
+];
 
   const testimonials = [
     {
@@ -121,49 +128,30 @@ export default function CampGasLandpingPage() {
 
   const features = [
     {
-      icon: <Flame className="w-6 h-6 sm:w-8 sm:h-8" />,
-      title: "Powerful Performance",
-      description: "High-quality burner for efficient cooking with consistent flame control"
-    },
-    {
-      icon: <Shield className="w-6 h-6 sm:w-8 sm:h-8" />,
-      title: "Safety First",
-      description: "Built-in safety features and quality materials for secure outdoor cooking"
-    },
-    {
-      icon: <Wind className="w-6 h-6 sm:w-8 sm:h-8" />,
-      title: "Wind Resistant",
-      description: "Advanced design that works perfectly even in windy outdoor conditions"
-    },
-    {
       icon: <Package className="w-6 h-6 sm:w-8 sm:h-8" />,
       title: "Ultra Portable",
-      description: "Lightweight and compact design perfect for camping, hiking, and outdoor adventures"
+      description: "Lightweight and compact design perfect for trips, camping, hiking, and outdoor adventures"
     },
     {
       icon: <Zap className="w-6 h-6 sm:w-8 sm:h-8" />,
       title: "Quick Setup",
       description: "Easy to set up and start cooking in seconds with simple ignition system"
     },
-    {
-      icon: <Award className="w-6 h-6 sm:w-8 sm:h-8" />,
-      title: "Premium Quality",
-      description: "Made with high-quality materials and undergoes rigorous testing for durability"
-    }
+    // {
+    //   icon: <Award className="w-6 h-6 sm:w-8 sm:h-8" />,
+    //   title: "Premium Quality",
+    //   description: "Made with high-quality materials and undergoes rigorous testing for durability"
+    // }
   ];
 
   const productImages = [
     // "https://ext.same-assets.com/766014306/3315234400.jpeg",
-    // "https://ext.same-assets.com/766014306/3744395389.jpeg",
-    // "https://ext.same-assets.com/766014306/2224721905.jpeg",
+    "https://ext.same-assets.com/766014306/3744395389.jpeg",
+    "https://ext.same-assets.com/766014306/3829765178.jpeg",
     camp,
     camp1,
-    "https://ext.same-assets.com/766014306/3829765178.jpeg",
     campground,
-    // kett,
-    // fry,
-
-
+    
   ];
 
   const productVideos = [
@@ -172,6 +160,31 @@ export default function CampGasLandpingPage() {
     video1,
     video2
   ];
+
+// Product image2
+const imageControls = useAnimation();
+const imageSectionRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const node = imageSectionRef.current;
+  if (!node) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          imageControls.start({ opacity: 1, y: 0 });
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(node);
+  return () => observer.disconnect();
+}, [imageControls]);
+
+  
 
   // Animation variants
   const fadeInUp = {
@@ -246,21 +259,104 @@ export default function CampGasLandpingPage() {
 
   const whatsappUrl = `https://wa.me/2348114580792?text=Hi,%20I%20want%20to%20buy%20CAMPING%20GAS%20-%20${packages.find(p => p.id === selectedPackage)?.name}%20Package`;
 
-  const handleOrderSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
 
-    localStorage.setItem('orderData', JSON.stringify({
-      ...orderForm,
-      package: packages.find(p => p.id === orderForm.package),
-      timestamp: new Date().toISOString()
-    }));
 
-    navigate('/thank-you');
-  };
+ const handleOrderSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError(null);       // clear previous error
+  setLoading(true);     // show "processing"
+
+  // ✅ instead of alert
+  if (!orderForm.fullName || !orderForm.phone || !orderForm.address || 
+      !orderForm.city || !orderForm.state || !orderForm.package) {
+    setLoading(false);
+    setError('⚠️ Please fill in all required fields');
+    return;
+  }
+
+  const formData = new FormData(e.target as HTMLFormElement);
+  const availability = formData.get('availability') as string;
+
+  if (!availability) {
+    setLoading(false);
+    setError('⚠️ Please select your availability');
+    return;
+  }
+
+  try {
+    const selectedPackage = packages.find(pkg => pkg.id === orderForm.package);
+    const price = selectedPackage ? parseInt(selectedPackage.price.replace(/,/g, '')) : 0;
+
+    const formatNigerianPhone = (phone: string) => {
+      let cleaned = phone.replace(/\D/g, '');
+      if (cleaned.startsWith('234')) return `+${cleaned}`;
+      if (cleaned.startsWith('0')) return `+234${cleaned.substring(1)}`;
+      if (cleaned.length === 10) return `+234${cleaned}`;
+      return phone;
+    };
+
+    const phoneNumbers = orderForm.phone
+      .split(',')
+      .map(phone => formatNigerianPhone(phone.trim()))
+      .filter(phone => phone);
+
+    const formattedWhatsAppPhone = orderForm.whatsappPhone 
+      ? formatNigerianPhone(orderForm.whatsappPhone.trim()) 
+      : "";
+
+    const orderData = {
+      fullName: orderForm.fullName.trim(),
+      phone: phoneNumbers,
+      whatsappPhone: formattedWhatsAppPhone,
+      address: orderForm.address.trim(),
+      city: orderForm.city.trim(),
+      state: orderForm.state.trim(),
+      package: orderForm.package,
+      availability,
+      price
+    };
+
+    const response = await fetch('https://myoreva-backend-1.onrender.com/api/form/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("✅ Order submitted:", result);
+
+      setOrderForm({
+        fullName: '',
+        phone: '',
+        whatsappPhone: '',
+        address: '',
+        city: '',
+        state: '',
+        package: ''
+      });
+      (e.target as HTMLFormElement).reset();
+
+      navigate('/thank-you');
+    } else {
+      const errorData = await response.json();
+      setError(errorData.message || '❌ Failed to submit order. Please try again.');
+    }
+
+  } catch (err: any) {
+    console.error("Network error:", err);
+    setError('❌ Network error. Please check your connection.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const scrollToPackages = () => {
     document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
   };
+  
 
   return (
   
@@ -353,7 +449,8 @@ export default function CampGasLandpingPage() {
               >
                 Are you tired of running out of gas in the middle of cooking or working?
 
-                Our Portable Camping Gas Stove is here to save the day! .
+                Our Portable Camping Gas Stove is here to save the day!
+              
                 {/* Perfect for camping, hiking, BBQ gatherings and all outdoor adventures. */}
               </motion.p>
 
@@ -468,15 +565,7 @@ export default function CampGasLandpingPage() {
                   />
                   <span className="relative z-10 ">ORDER NOW - FREE DELIVERY</span>
                 </motion.button>
-                {/* <motion.button
-                  onClick={() => window.open('tel:08114580792')}
-                  className="border-2 border-white text-white hover:bg-white hover:text-green-700 px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 w-full sm:w-auto"
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,1)", color: "rgb(21, 128, 61)" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2 inline" />
-                  Call: 08114580792
-                </motion.button> */}
+                
               </motion.div>
             </motion.div>
 
@@ -555,88 +644,180 @@ export default function CampGasLandpingPage() {
         </div>
       </section>
 
-      {/* Product Video Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-100 relative">
-        <motion.div 
-          className="absolute inset-0 opacity-30"
-          style={{ y: backgroundY }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(16,185,129,0.1),transparent_50%)]"></div>
-        </motion.div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div 
-              className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
-              whileHover={{ scale: 1.05 }}
-            >
-              See CAMPING GAS™ In Action
-            </motion.div>
-            <motion.h2 
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              Watch How Easy It Is To Use
-            </motion.h2>
-            <motion.p 
-              className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              See why thousands of outdoor enthusiasts choose our portable camp gas stove for their adventures
-            </motion.p>
-          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {productVideos.map((video, index) => (
-              <motion.div
-                key={index}
-                className="relative group"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ y: -10 }}
+
+{/* First Product Images */}
+<motion.section
+  className="py-8 bg-white"
+  initial={{ opacity: 0, y: 80 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: false, amount: 0.15 }} // "once: false" means replay on scroll
+  transition={{ duration: 0.8 }}
+>
+  <div className="max-w-6xl mx-auto px-4 text-center">
+    {/* Tagline */}
+    <span className="inline-block bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
+      Portable Gas Stove You Can Trust
+    </span>
+
+    {/* Heading */}
+    <h2 className="text-3xl sm:text-4xl font-bold text-red-600 mb-2">
+      COOK ANYWHERE AT ANYTIME AS A CAMPER, HIKER, PICNIC ENTHUSIAST AND ADVENTURE LOVER.
+    </h2>
+
+    {/* Intro Text */}
+    <p className="max-w-2xl mx-auto text-gray-500-bold  mb-4">
+      🔥Say goodbye to heavy cooking gear!🔥
+    </p>
+    <p className="max-w-2xl mx-auto text-gray-500 mb-10">Our Mini Camping Gas is small enough to fit in your backpack but powerful enough to cook all your favorite meals.
+      Take it on your next trip and experience the freedom of outdoor cooking!</p>
+
+    {/* Offer Text */}
+    <p className="mb-2">🔥29% OFF💝 Portable Camping Gas Stove</p>
+    <p className="text-lg sm:text-md font-bold text-red-600 mb-10">
+      ✅ Don't delay, Take Action Now. Buy While It's Still In Stock — ORDER NOW
+    </p>
+
+    {/* Images */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      {[easy, campfry].map((img, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6, delay: index * 0.2 }}
+          className="relative rounded-lg overflow-hidden shadow-lg group"
+        >
+          <motion.img
+            src={img}
+            alt={`Product view ${index + 1}`}
+            loading="eager"
+            {...{ fetchpriority: "high" }}
+            className="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-105"
+            whileHover={{ scale: 1.05 }}
+          />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.section>
+
+
+
+
+
+      {/* Product Video Section */}
+<section className="py-8 sm:py-8 lg:py-20 bg-gradient-to-br from-slate-50 via-green-50 to-emerald-100 relative">
+  <motion.div 
+    className="absolute inset-0 opacity-30"
+    style={{ y: backgroundY }}
+  >
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_80%,rgba(16,185,129,0.1),transparent_50%)]"></div>
+  </motion.div>
+
+  <div className="container mx-auto px-4 relative z-10">
+    <motion.div 
+      className="text-center mb-12"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.div 
+        className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg"
+        whileHover={{ scale: 1.05 }}
+      >
+        See CAMPING GAS™ In Action
+      </motion.div>
+      <motion.h2 
+        className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+      >
+        Watch How Easy It Is To Use
+      </motion.h2>
+      <motion.p 
+        className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+      >
+        See why thousands of outdoor enthusiasts choose our portable camp gas stove for their adventures
+      </motion.p>
+    </motion.div>
+
+    <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      {productVideos.map((video, index) => {
+        const poster = productImages?.[index] || "/default-poster.jpg";
+        const src = video || "/videos/default.mp4";
+
+        if (!video) console.warn(`Missing video at index ${index}`);
+
+        return (
+          <motion.div
+            key={index}
+            className="relative group"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: index * 0.2 }}
+            whileHover={{ y: -10 }}
+          >
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-900 transition-all duration-500 group-hover:shadow-3xl">
+              {/* Video with working controls */}
+              <video
+                className="w-full h-64 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                poster={poster}
+                controls
+                autoPlay
+                muted
+                playsInline
+                loop
               >
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gray-900 transition-all duration-500 group-hover:shadow-3xl">
-                  <video
-                    className="w-full h-64 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                    poster={productImages[index]}
-                    controls
-                  >
-                    <source src={video} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 group-hover:from-black/20 transition-all duration-500"></div>
-                  <motion.div 
-                    className="absolute top-4 left-4"
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                      LIVE VIDEO
-                    </div>
-                  </motion.div>
+                <source src={src} type="video/mp4" />
+               
+              </video>
+
+              {/* Transparent overlay – now non-blocking */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 group-hover:from-black/20 transition-all duration-500 pointer-events-none"></div>
+
+              {/* LIVE badge animation */}
+              <motion.div 
+                className="absolute top-4 left-4"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <div className="bg-gradient-to-r from-emerald-600 to-green-700 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                  LIVE VIDEO
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  </div>
+
+
+  <div className="mt-8 flex justify-center">
+  <motion.a
+    href="#packages"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg transition-transform duration-300 hover:bg-green-600"
+  >
+     YES! I'M INTERESTED NOW!
+  </motion.a>
+</div>
+</section>
+
 
       {/* Product Images Gallery */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-emerald-50 to-teal-100 relative overflow-hidden">
+      <section className="py-8 sm:py-16 lg:py-8 bg-gradient-to-br from-emerald-50 to-teal-100 relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 opacity-20"
           animate={{ 
@@ -665,7 +846,7 @@ export default function CampGasLandpingPage() {
               className="inline-block bg-gradient-to-r from-emerald-100 to-green-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
               whileHover={{ scale: 1.05, rotate: 1 }}
             >
-              Product Gallery
+              Portable Camping Gas Stove Gallery
             </motion.div>
             <motion.h2 
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6"
@@ -724,7 +905,7 @@ export default function CampGasLandpingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-100 relative">
+      <section className="py-6 sm:py-10 lg:py-10 bg-gradient-to-br from-gray-50 via-slate-50 to-stone-100 relative">
         <motion.div 
           className="absolute inset-0 opacity-30"
           animate={{ 
@@ -772,12 +953,12 @@ Our Camp Gas is here to save the day!
           </motion.div>
 
           <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-          >
+  className="flex flex-wrap justify-center gap-6 sm:gap-8"
+  variants={staggerContainer}
+  initial="initial"
+  whileInView="animate"
+  viewport={{ once: true, amount: 0.2 }}
+>
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -827,11 +1008,77 @@ Our Camp Gas is here to save the day!
               </motion.div>
             ))}
           </motion.div>
+
+          <div className="mt-8 flex justify-center">
+  <motion.a
+    href="#packages"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg transition-transform duration-300 hover:bg-green-600"
+  >
+     YES! I'M INTERESTED NOW!
+  </motion.a>
+</div>
         </div>
       </section>
 
+
+{/* Second Product Image section */}
+<section ref={imageSectionRef} className="py-8 bg-white">
+  <div className="max-w-6xl mx-auto px-4 text-center">
+    <span className="inline-block bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
+      Say Goodbye to unfinished cooking 🔥 our reliable camping gas stoves, designed to keep you cooking no matter the situation.
+    </span>
+    <h2 className="text-3xl sm:text-4xl font-bold text-red-600 mb-2">
+     Never Let Gas Shortages Ruin Your Meals!
+    </h2>
+    <p className="max-w-2xl mx-auto text-gray-500 mb-10">
+     
+Easy to use, safe, and efficient, you can cook your favorite meals anywhere, anytime. Don't let gas worries hold you back - get your camping gas stove today!
+
+    </p>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+  {[campground, campfry].map((img, index) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: 50 }}
+      animate={imageControls}
+      transition={{ duration: 0.6, delay: index * 0.2 }}
+      className="relative rounded-lg overflow-hidden shadow-lg group"
+    >
+      <motion.img
+        src={img}
+        alt={`Product view ${index + 1}`}
+        className="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-105"
+        whileHover={{ scale: 1.05 }}
+      />
+    </motion.div>
+      ))}
+    </div>
+  
+  </div>
+
+  
+     {/* Order Now Button */}
+  <div className="mt-6 flex justify-center">
+  <motion.a
+    href="#packages"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg transition-transform duration-300 hover:bg-green-600"
+  >
+     YES! I'M INTERESTED NOW!
+  </motion.a>
+</div>
+</section>
+
+
+
+
+
       {/* Trust Indicators */}
-      <section className="py-6 sm:py-8 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 text-white relative overflow-hidden">
+      <section className="py-6 sm:py-6 bg-gradient-to-r from-gray-900 via-slate-900 to-gray-900 text-white relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 opacity-20"
           animate={{ 
@@ -898,7 +1145,7 @@ Our Camp Gas is here to save the day!
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 relative overflow-hidden">
+      <section className="py-8 sm:py-10 lg:py-10 bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 opacity-30"
           animate={{ 
@@ -923,7 +1170,7 @@ Our Camp Gas is here to save the day!
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              className="inline-block bg-gradient-to-r from-green-100 to-emerald-200 text-green-800 px-6 py-2 rounded-full text-sm font-bold mb-6 shadow-lg"
               whileHover={{ scale: 1.05 }}
             >
               Customer Reviews
@@ -1038,8 +1285,56 @@ Our Camp Gas is here to save the day!
         </div>
       </section>
 
-      {/* Package Selection */}
-      <section id="packages" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-white via-gray-50 to-slate-100 relative">
+
+{/* ATTENTION PLEASE! */}
+      <section>
+
+        <motion.div 
+            className="text-center mt-8 sm:mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <motion.div 
+              className="max-w-2xl mx-auto border-red-200 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg p-4 border shadow-lg"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="flex items-center justify-center mb-2">
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Clock className="h-4 w-4 mr-2 text-red-600" />
+                </motion.div>
+                <span className="text-red-800 font-xl text-4xl">
+                  <strong>ATTENTION PLEASE:</strong>
+                </span>
+              </div>
+              <p className="text-red-800 text-sm sm:text-base">
+                We are charged for every order that you place. <br />
+                If you CANNOT receive your order within 1-2 working days, please DO NOT place an order. <br />
+                {/* If you will be TRAVELING and will not be available DO NOT place an order. <br /> */}
+                We will contact you immediately and start processing your order. <br />Thanks for  your understanding!
+              </p>
+
+              <div className="mt-10 flex justify-center">
+  <motion.a
+    href="#packages"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="bg-red-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg transition-transform duration-300 hover:bg-green-600"
+  >
+     YES! I'M INTERESTED NOW!
+  </motion.a>
+</div>
+            </motion.div>
+          </motion.div>
+          
+      </section>
+
+      {/* PACKAGE SELECTION */}
+      <section id="packages" className="py-2 sm:py-2 lg:py-2 bg-gradient-to-br from-white via-gray-50 to-slate-100 relative">
         <motion.div 
           className="absolute inset-0 opacity-20"
           animate={{ 
@@ -1064,7 +1359,7 @@ Our Camp Gas is here to save the day!
             transition={{ duration: 0.8 }}
           >
             <motion.div 
-              className="inline-block bg-gradient-to-r from-red-100 to-rose-200 text-red-800 px-6 py-3 rounded-full text-sm font-bold mb-6 shadow-lg"
+              className="inline-block bg-gradient-to-r from-red-100 to-rose-200 text-red-800 px-6 py-3 rounded-full text-3xl font-bold mb-6 shadow-lg"
               whileHover={{ scale: 1.05 }}
             >
               Choose Your Package
@@ -1129,7 +1424,7 @@ Our Camp Gas is here to save the day!
                       ease: "easeInOut"
                     }}
                   >
-                    <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 sm:px-6 py-2 rounded-full font-bold shadow-lg text-xs sm:text-sm">
+                    <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-2 sm:px-3 py-1 rounded-full font-semibold shadow-md text-[10px] sm:text-xs">
                       🎯 MOST POPULAR
                     </div>
                   </motion.div>
@@ -1137,12 +1432,26 @@ Our Camp Gas is here to save the day!
 
                 <div className="text-center pt-6 sm:pt-8 px-6">
                   <motion.h3 
-                    className="text-xl sm:text-2xl font-bold text-gray-900 mb-2"
+                    className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center mb-1 tracking-widetext-3xl sm:text-4xl font-extrabold text-red-600 text-center mb-2 tracking-wider drop-shadow-sm"
                     whileHover={{ scale: 1.05 }}
                   >
                     {pkg.name}
                   </motion.h3>
-                  <p className="text-sm sm:text-base text-gray-600 font-medium">{pkg.subtitle}</p>
+                  <p className="text-lg sm:text-xl font-semibold text-gray-700 mb-2 text-center">{pkg.subtitle}</p>
+
+
+
+                   {/* Product Image */}
+  <motion.img 
+    src={pkg.image} 
+    alt={pkg.name} 
+    className="w-full max-w-[220px] h-auto object-contain mx-auto mb-4 rounded-xl shadow-lg"
+    whileHover={{ scale: 1.08 }}
+    transition={{ duration: 0.3 }}
+  />
+
+
+
 
                   <div className="py-4 sm:py-6">
                     <motion.div 
@@ -1211,41 +1520,13 @@ Our Camp Gas is here to save the day!
             ))}
           </motion.div>
 
-          <motion.div 
-            className="text-center mt-8 sm:mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-          >
-            <motion.div 
-              className="max-w-2xl mx-auto border-red-200 bg-gradient-to-r from-red-50 to-orange-50 rounded-lg p-4 border shadow-lg"
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="flex items-center justify-center mb-2">
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <Clock className="h-4 w-4 mr-2 text-red-600" />
-                </motion.div>
-                <span className="text-red-800 font-medium text-sm sm:text-base">
-                  <strong>ATTENTION PLEASE:</strong>
-                </span>
-              </div>
-              <p className="text-red-800 text-sm sm:text-base">
-                We are charged for every order that you place. <br />
-                If you CANNOT receive your order within 1-3 working days, please DO NOT place an order. <br />
-                If you will be TRAVELING and will not be available DO NOT place an order. <br />
-                NOTE: <br />We will contact you immediately and start processing your order. <br />Thanks for  your understanding!
-              </p>
-            </motion.div>
-          </motion.div>
+          
         </div>
       </section>
+      
 
       {/* Order Form */}
-      <section id="order-form" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-100 via-slate-100 to-stone-200 relative">
+      <section id="order-form" className="py-18 sm:py-12 lg:py-12 bg-gradient-to-br from-gray-100 via-slate-100 to-stone-200 relative">
         <motion.div 
           className="absolute inset-0 opacity-20"
           animate={{ 
@@ -1270,8 +1551,11 @@ Our Camp Gas is here to save the day!
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.8 }}
             >
-              <motion.div 
-                className="bg-gradient-to-r from-red-600 via-red-700 to-rose-800 text-white p-6 sm:p-8 text-center relative overflow-hidden"
+              <motion.div
+               className= "bg-gradient-to-r from-red-600 via-red-700 to-rose-800 text-white p-6 sm:p-8 text-center relative overflow-hidden" 
+
+
+
                 initial={{ opacity: 0, y: -30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -1519,69 +1803,100 @@ Our Camp Gas is here to save the day!
                           </div>
                         </div>
                       </div>
-                    </motion.div>
 
-                    <motion.button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white py-4 sm:py-6 text-lg sm:text-xl font-bold rounded-lg shadow-lg transition-all duration-300 uppercase relative overflow-hidden"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <motion.span
-                        className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
-                        initial={{ x: "-100%" }}
-                        whileHover={{ x: "100%" }}
-                        transition={{ duration: 0.8 }}
-                      />
-                      <span className="relative z-10">Click Here To Order</span>
-                    </motion.button>
+                    </motion.div>
+<motion.button
+  type="submit"
+  disabled={loading} // ✅ prevent multiple clicks
+  className={`w-full transition-transform duration-300 text-white py-4 sm:py-6 text-lg sm:text-xl font-bold rounded-lg shadow-lg uppercase relative overflow-hidden
+    ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"}`}
+  whileHover={!loading ? { scale: 1.02 } : {}}
+  whileTap={!loading ? { scale: 0.98 } : {}}
+>
+  <motion.span
+    className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+    initial={{ x: "-100%" }}
+    whileHover={!loading ? { x: "100%" } : {}}
+    transition={{ duration: 0.8 }}
+  />
+
+  {/* ✅ Change text dynamically */}
+  <span className="relative z-10">
+    {loading ? "Processing..." : "Click Here To Order"}
+  </span>
+</motion.button>
 
                     {/* <p className="text-center text-xs sm:text-sm text-gray-500 mt-4">
                       By clicking the button above, you'll be redirected to our thank you page
                     </p> */}
                   </motion.div>
+
+
                 </form>
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
+      
 
-    
-    {/* Sticky Order Button */}
-      <AnimatePresence>
-        {showStickyOrder && (
-          <motion.div 
-            className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-2xl border-t z-50 lg:hidden"
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.button 
-              onClick={scrollToPackages}
-              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-4 text-lg font-semibold rounded-full shadow-lg relative overflow-hidden"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <motion.span
-                className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
-              <span className="relative z-10 flex items-center justify-center">
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                ORDER NOW - ₦38,500 
-              </span>
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      
+{/* Sticky Order Button - Mobile */}
+<AnimatePresence>
+  {showStickyOrder && (
+    <motion.div 
+      className="fixed bottom-0 left-0 right-0 p-4 bg-black shadow-2xl border-t z-50 lg:hidden"
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.button 
+        onClick={scrollToPackages}
+        className="w-full bg-red-600 transition-transform duration-300 hover:bg-green-700  text-white py-4 text-lg font-semibold shadow-lg rounded-lg relative overflow-hidden"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <motion.span
+          className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
+          initial={{ x: "-100%" }}
+          whileHover={{ x: "100%" }}
+          transition={{ duration: 0.6 }}
+        />
+        <span className="relative z-10 flex items-center justify-center">
+          <ShoppingCart className="w-5 h-5 mr-2" />
+          YES! I'M INTERESTED NOW!
+        </span>
+      </motion.button>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+{/* Sticky Order Button - Desktop */}
+<AnimatePresence>
+  {showStickyOrder && (
+    <motion.button
+      onClick={scrollToPackages}
+      className="hidden lg:flex fixed bottom-8 right-8 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white px-6 py-3 rounded-full text-lg font-semibold shadow-lg z-50"
+      initial={{ y: 50, opacity: 0 }}
+      animate={{ y: [0, -5, 0], opacity: 1 }}
+      transition={{ 
+        duration: 1, 
+        y: { repeat: Infinity, repeatDelay: 3, duration: 0.6, ease: "easeInOut" } 
+      }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <ShoppingCart className="w-5 h-5 mr-2" />
+      YES! I'M INTERESTED NOW!
+    </motion.button>
+  )}
+</AnimatePresence>
+
 
       {/* WhatsApp Button */}
       <motion.div 
-        className="fixed right-4 bottom-20 sm:bottom-4 z-50"
+        className="fixed right-4 bottom-20 sm:bottom-4 z-50  lg:hidden"
         initial={{ scale: 0, rotate: 180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ delay: 2, duration: 0.5, type: "spring" }}
@@ -1590,7 +1905,7 @@ Our Camp Gas is here to save the day!
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 animate-pulse hover:animate-none flex items-center justify-center"
+              className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 hover:animate-none flex items-center justify-center"
               aria-label="Contact us on WhatsApp"
             >
               <a href=""></a>
@@ -1599,6 +1914,10 @@ Our Camp Gas is here to save the day!
             </svg>
             </a>
             </motion.div>
+
+
+
+
 
       {/* Social Proof Banner */}
       <section className="py-8 sm:py-12 bg-gradient-to-r from-green-600 to-green-700 text-white">
@@ -1634,7 +1953,7 @@ Our Camp Gas is here to save the day!
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
   <a
-    href="https://api.whatsapp.com/send?phone=+2348114580792&text=Hi,%20I%20want%20to%20buy%20WART%20REMOVER"
+    href="https://api.whatsapp.com/send?phone=+2348114580792&text=Hi,%20I%20want%20to%20buy%20CAMPING%20GAS%20STOVE"
     target="_blank"
     rel="noopener noreferrer"
     className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-lg transition-colors duration-200 flex items-center justify-center"
