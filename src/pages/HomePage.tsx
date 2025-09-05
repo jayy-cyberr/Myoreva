@@ -507,63 +507,65 @@ const HomePage: React.FC = () => {
 >
   {featuredProducts.map((product) => (
     <motion.div
-      key={product.id}
-      variants={{
-        hidden: { opacity: 0, y: 40, scale: 0.95 },
-        visible: { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          transition: {
-            duration: 0.6,
-            ease: [0.25, 0.1, 0.25, 1], // Smooth ease
-          },
-        },
-      }}
-      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+  key={product.id}
+  variants={{
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1], 
+      },
+    },
+  }}
+  className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 relative z-0"
+>
+  {/* Image Section */}
+  <div className="relative group z-0">
+    <motion.img
+      src={product.image}
+      alt={product.name}
+      initial={{ scale: 1.05 }}
+      whileHover={{ scale: 1.1 }}
+      transition={{ duration: 0.5 }}
+      className="w-full h-48 md:h-56 object-cover block pointer-events-none" 
+    />
+    <div className="absolute top-3 left-3 pointer-events-none z-10">
+      <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
+        {product.category}
+      </span>
+    </div>
+  </div>
+
+  {/* Text + Button */}
+  <div className="p-3 md:p-4 z-10 relative">
+    <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
+      {product.name}
+    </h3>
+
+    <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+      {product.description}
+    </p>
+
+    <div className="flex items-center justify-between mb-3">
+      <span className="font-bold text-lg text-gray-900">
+        ₦{product.price.toLocaleString()}
+      </span>
+    </div>
+
+    <a
+      href={product.redirectUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm relative z-20"
     >
-      <div className="relative group">
-        <motion.img
-          src={product.image}
-          alt={product.name}
-          initial={{ scale: 1.05 }}
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.5 }}
-          className="w-full h-48 md:h-56 object-cover"
-        />
-        <div className="absolute top-3 left-3">
-          <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">
-            {product.category}
-          </span>
-        </div>
-      </div>
+      Order Now
+    </a>
+  </div>
+</motion.div>
 
-      <div className="p-3 md:p-4">
-        <h3 className="font-semibold text-sm md:text-base mb-2 text-gray-900 line-clamp-1">
-          {product.name}
-        </h3>
-
-        {/* Description */}
-        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
-          {product.description}
-        </p>
-
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-bold text-lg text-gray-900">
-            ₦{product.price.toLocaleString()}
-          </span>
-        </div>
-
-        <a
-          href={product.redirectUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-lg transition-colors duration-300 text-center text-sm"
-        >
-          Order Now
-        </a>
-      </div>
-    </motion.div>
   ))}
 </motion.div>
 
