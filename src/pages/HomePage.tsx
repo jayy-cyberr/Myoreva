@@ -99,7 +99,7 @@ const featuredProducts = [
     image: campGas,
     rating: 0,
     // reviews: [],
-    redirectUrl: "/camp-gas/"
+    redirectUrl: "/camp-gas"
   },
   {
     id: 3,
@@ -110,7 +110,7 @@ const featuredProducts = [
     image: Hbest,
     rating: 0,
     reviews: [],
-    redirectUrl: "/wart-remover/"
+    redirectUrl: "/wart-remover"
   },
   {
     id: 4,
@@ -121,7 +121,7 @@ const featuredProducts = [
     image: campGa,
     rating: 0,
     reviews: [],
-    redirectUrl: "/camp-gas/"
+    redirectUrl: "/camp-gas"
   }
 ];
 
