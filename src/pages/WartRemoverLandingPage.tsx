@@ -227,7 +227,7 @@ const [error, setError] = useState<string | null>(null);
       });
       (e.target as HTMLFormElement).reset();
 
-      navigate('/thank-you');
+      navigate('/thank-you2');
     } else {
       const errorData = await response.json();
       setError(errorData.message || '❌ Failed to submit order. Please try again.');
